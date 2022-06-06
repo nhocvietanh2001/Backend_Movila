@@ -1,8 +1,7 @@
-package com.example.AccomadationForStudent.Repositories;
+package com.example.MovilaApplication.Repositories;
 
-import com.example.AccomadationForStudent.Models.User;
+import com.example.MovilaApplication.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

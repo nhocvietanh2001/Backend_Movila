@@ -1,23 +1,19 @@
-package com.example.AccomadationForStudent.Controllers;
+package com.example.MovilaApplication.Controllers;
 
-import com.example.AccomadationForStudent.Models.Account;
-import com.example.AccomadationForStudent.Models.ResponseObject;
-import com.example.AccomadationForStudent.Services.AccountService;
+import com.example.MovilaApplication.Models.Account;
+import com.example.MovilaApplication.Models.ResponseObject;
+import com.example.MovilaApplication.Services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "api/v1/accounts")
+@RequestMapping(path = "/accounts")
 public class AccountController {
-
-    private final AccountService accountService;
-
     @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
+    AccountService accountService;
+
     @GetMapping("/login")
     ResponseEntity<ResponseObject> Validate(@RequestBody Account account) {
         return accountService.Validate(account.getUsername(), account.getPassword());

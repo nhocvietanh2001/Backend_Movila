@@ -1,4 +1,4 @@
-package com.example.AccomadationForStudent.Models;
+package com.example.MovilaApplication.Models;
 
 public class ResponseObject {
     private String status;

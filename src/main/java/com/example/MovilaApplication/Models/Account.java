@@ -1,4 +1,4 @@
-package com.example.AccomadationForStudent.Models;
+package com.example.MovilaApplication.Models;
 
 import javax.persistence.*;
 
@@ -6,12 +6,11 @@ import javax.persistence.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="aid")
     private Long id;
     private String username;
     private String password;
-    private String userID;
     private String role;
-
 
     public Account() {
     }
@@ -19,19 +18,7 @@ public class Account {
     public Account(String username, String password, String userID, String role) {
         this.username = username;
         this.password = password;
-        this.userID = userID;
         this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userID='" + userID + '\'' +
-                ", role='" + role + '\'' +
-                '}';
     }
 
     public Long getId() {
@@ -58,19 +45,21 @@ public class Account {
         this.password = password;
     }
 
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

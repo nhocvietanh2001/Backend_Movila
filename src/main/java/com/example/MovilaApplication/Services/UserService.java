@@ -1,13 +1,11 @@
-package com.example.AccomadationForStudent.Services;
+package com.example.MovilaApplication.Services;
 
-import com.example.AccomadationForStudent.Models.ResponseObject;
-import com.example.AccomadationForStudent.Models.User;
-import com.example.AccomadationForStudent.Repositories.UserRepository;
+import com.example.MovilaApplication.Models.ResponseObject;
+import com.example.MovilaApplication.Models.User;
+import com.example.MovilaApplication.Repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,9 +66,6 @@ public class UserService {
         } else {
             Optional<User> updateUser = userRepository.findById(id)
                     .map(user -> {
-                        user.setName(newUser.getName());
-                        user.setBirthday(newUser.getBirthday());
-                        user.setGender(newUser.getGender());
                         user.setPhone(newUser.getPhone());
                         user.setMail(newUser.getMail());
                         return userRepository.save(user);

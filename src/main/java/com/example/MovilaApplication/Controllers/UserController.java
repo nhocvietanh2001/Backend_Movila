@@ -1,27 +1,17 @@
-package com.example.AccomadationForStudent.Controllers;
+package com.example.MovilaApplication.Controllers;
 
-import com.example.AccomadationForStudent.Models.ResponseObject;
-import com.example.AccomadationForStudent.Models.User;
-import com.example.AccomadationForStudent.Repositories.UserRepository;
-import com.example.AccomadationForStudent.Services.UserService;
+import com.example.MovilaApplication.Models.ResponseObject;
+import com.example.MovilaApplication.Models.User;
+import com.example.MovilaApplication.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
-@RequestMapping(path = "api/v1/users")
+@RequestMapping(path = "/users")
 public class UserController {
-
-    private final UserService userService;
-
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    UserService userService;
 
     @GetMapping("")
     //Get all Users

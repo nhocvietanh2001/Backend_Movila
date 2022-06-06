@@ -1,9 +1,8 @@
-package com.example.AccomadationForStudent.Services;
+package com.example.MovilaApplication.Services;
 
-import com.example.AccomadationForStudent.Models.Account;
-import com.example.AccomadationForStudent.Models.ResponseObject;
-import com.example.AccomadationForStudent.Models.User;
-import com.example.AccomadationForStudent.Repositories.AccountRepository;
+import com.example.MovilaApplication.Models.Account;
+import com.example.MovilaApplication.Models.ResponseObject;
+import com.example.MovilaApplication.Repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +51,6 @@ public class AccountService {
         if (foundAccount.isPresent()) {
             foundAccount.map(updateAccount -> {
                         updateAccount.setPassword(account.getPassword());
-                        updateAccount.setUserID(account.getUserID());
                         updateAccount.setRole(account.getRole());
                         return accountRepository.save(updateAccount);
                     });
