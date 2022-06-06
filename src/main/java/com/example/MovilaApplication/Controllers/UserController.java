@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/users")
 public class UserController {
@@ -15,29 +18,29 @@ public class UserController {
 
     @GetMapping("")
     //Get all Users
-    ResponseEntity<ResponseObject> findAllUser(){
+    List<User> findAllUser(){
         return userService.findAllUser();
     }
     // Get user by ID
     @GetMapping("/{id}")
-    ResponseEntity<ResponseObject> findUserById(@PathVariable Long id){
+    Optional<User> findUserById(@PathVariable Long id){
         return userService.findUserById(id);
     }
 
     // Add new user
     @PostMapping("/new-user")
-    ResponseEntity<ResponseObject> addNewUser(@RequestBody User newUser){
+    Boolean addNewUser(@RequestBody User newUser){
         return userService.addNewUser(newUser);
     }
 
     // Update user
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateUser(@RequestBody User newUser, @PathVariable Long id){
+    Optional<User> updateUser(@RequestBody User newUser, @PathVariable Long id){
         return userService.updateUser(newUser, id);
     }
     // Delete user
     @DeleteMapping("/{id}")
-    ResponseEntity<ResponseObject> deleteUser(@PathVariable Long id){
+    Boolean deleteUser(@PathVariable Long id){
         return userService.deleteUser(id);
     }
 

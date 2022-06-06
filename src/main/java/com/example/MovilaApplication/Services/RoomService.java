@@ -22,38 +22,23 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
     // Post
-    public ResponseEntity<ResponseObject> addRoom(Room room){
-        return  ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("200", "Add room successfully", roomRepository.save(room))
-        );
+    public Room addRoom(Room room){
+        return roomRepository.save(room);
     }
     // Get
-    public ResponseEntity<ResponseObject> findRoomByID(long id){
+    public Optional<Room> findRoomByID(long id){
         Optional<Room> optionalRoom = roomRepository.findById(id);
-        if(optionalRoom.isPresent()){
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Get room detail successfully", optionalRoom)
-            );
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Cannot found this room by Id: " + id, "")
-            );
-        }
+        return optionalRoom;
     }
     // Put
     @Transactional
-    public ResponseEntity<ResponseObject> updateRoom(Room newRoom, Long id){
+    public Optional<Room> updateRoom(Room newRoom, Long id){
         boolean exists = roomRepository.existsById(id);
-        if(!exists){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Cannot found this room by Id: " + id, "")
-            );
-        }
-        else {
+        if(exists) {
             Optional<Room> updateRoom = roomRepository.findById(id)
                     .map(room -> {
                         room.setName(newRoom.getName());
-                        room.setCat(newRoom.getCat());
+                        room.setCid(newRoom.getCid());
                         room.setPrice(newRoom.getPrice());
                         room.setNumberOfGuest(newRoom.getNumberOfGuest());
                         room.setFloor(newRoom.getFloor());
@@ -64,37 +49,24 @@ public class RoomService {
 
                         return roomRepository.save(room);
                     });
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Update room successfully", updateRoom)
-            );
+            return updateRoom;
         }
+        return null;
     }
     // Delete
-    public ResponseEntity<ResponseObject> deleteRoom(Long id) {
+    public Boolean deleteRoom(Long id) {
         boolean exists = roomRepository.existsById(id);
         if(!exists){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Cannot found this room by Id: " + id, "")
-            );
+            return false;
         }
         else{
             roomRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("200", "Delete room by Id: " + id + "successfully", "")
-            );
+            return true;
         }
     }
 
-    public ResponseEntity<ResponseObject> getAllRooms() {
+    public List<Room> getAllRooms() {
         List<Room> roomList = roomRepository.findAll();
-        if (roomList.size() > 0) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Get all user successfully", roomList)
-            );
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Cannot found any user", "")
-            );
-        }
+        return  roomList;
     }
 }

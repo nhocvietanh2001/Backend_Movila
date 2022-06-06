@@ -18,51 +18,29 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<ResponseObject> findAllUser() {
+    public List<User> findAllUser() {
         List<User> allUser = userRepository.findAll();
-        if (allUser.size() > 0) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Get all user successfully", allUser)
-            );
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Cannot found any user", "")
-            );
-        }
+        return allUser;
     }
 
-    public ResponseEntity<ResponseObject> findUserById(Long id){
+    public Optional<User> findUserById(Long id){
         Optional<User> foundUser = userRepository.findById(id);
-        if(foundUser.isPresent()){
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Get User detail successfully", foundUser)
-            );
+        return foundUser;
+    }
+
+    public Boolean addNewUser(User newUser){
+        Optional<User> UserByMail = userRepository.findByMail(newUser.getMail());
+        if (UserByMail.isPresent()) {
+            return false;
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Cannot found this user by Id: " + id, "")
-            );
+            return true;
         }
     }
 
-    public ResponseEntity<ResponseObject> addNewUser(User newUser){
+    public Optional<User> updateUser(User newUser, Long id){
         Optional<User> UserByMail = userRepository.findByMail(newUser.getMail());
         if (UserByMail.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    new ResponseObject("409", "Email already exists", "")
-            );
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Add User successfully", userRepository.save(newUser))
-            );
-        }
-    }
-
-    public ResponseEntity<ResponseObject> updateUser(User newUser, Long id){
-        Optional<User> UserByMail = userRepository.findByMail(newUser.getMail());
-        if (UserByMail.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    new ResponseObject("409", "Email already exists", "")
-            );
+            return null;
         } else {
             Optional<User> updateUser = userRepository.findById(id)
                     .map(user -> {
@@ -70,23 +48,17 @@ public class UserService {
                         user.setMail(newUser.getMail());
                         return userRepository.save(user);
                     });
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Update user successfully", updateUser)
-            );
+            return updateUser;
         }
     }
 
-    public ResponseEntity<ResponseObject> deleteUser(Long id){
+    public Boolean deleteUser(Long id){
         boolean isExists = userRepository.existsById(id);
         if(isExists){
             userRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Delete user successfully", "")
-            );
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Cannot find this user to delete", "")
-            );
+            return true;
+        } else {
+            return false;
         }
     }
 }

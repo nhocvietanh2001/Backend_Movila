@@ -13,13 +13,13 @@ import java.util.List;
 @RequestMapping(path = "/hotels")
 public class HotelController {
     @Autowired
-    HotelRepository hotelRepository ;
+    HotelRepository hotelRepository;
 
     @Autowired
     HotelService hotelService;
 
     @GetMapping()
-    List<Hotel> getAllHotel(){
+    List<Hotel> getAllHotel() {
         return hotelService.getAllHotel();
     }
 
@@ -29,8 +29,7 @@ public class HotelController {
     }
 
     @PostMapping("/")
-    void inputCode(@RequestBody Hotel hotel)
-    {
+    void inputCode(@RequestBody Hotel hotel) {
         hotelRepository.save(hotel);
     }
 

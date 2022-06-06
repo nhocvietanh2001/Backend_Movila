@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/rooms")
 public class RoomController {
@@ -21,19 +24,19 @@ public class RoomController {
     HotelRepository hotelRepository;
 
     @GetMapping
-    public ResponseEntity<ResponseObject> getAllRooms(){
+    public List<Room> getAllRooms(){
         return roomService.getAllRooms();
     }
     @GetMapping(path="{id}")
-    public ResponseEntity<ResponseObject> findRoomByID(@PathVariable long id) {
+    public Optional<Room> findRoomByID(@PathVariable long id) {
         return roomService.findRoomByID(id);
     }
     @PostMapping
-    public ResponseEntity<ResponseObject> addRoom(@RequestBody Room room){
+    public Room addRoom(@RequestBody Room room){
         return roomService.addRoom(room);
     }
     @PutMapping(path="{id}")
-    public ResponseEntity<ResponseObject> updateRoom(@PathVariable("id") Long id,  @RequestBody Room newRoom){
+    public Optional<Room> updateRoom(@PathVariable("id") Long id, @RequestBody Room newRoom){
         return roomService.updateRoom(newRoom, id);
     }
     @PutMapping("/{rid}/hotels/{hid}")
@@ -44,7 +47,7 @@ public class RoomController {
         return roomRepository.save(room);
     }
     @DeleteMapping(path="{id}")
-    public ResponseEntity<ResponseObject> deleteRoom(@PathVariable("id") Long id){
+    public Boolean deleteRoom(@PathVariable("id") Long id){
         return roomService.deleteRoom(id);
     }
 }

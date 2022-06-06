@@ -7,14 +7,15 @@ import javax.persistence.*;
 @Table(name="room")
 public class Room {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="rid")
     private Long id;
 
     @Column(name="rname")
     private String name;
 
-    private String cat;
+    @Column(name="catid")
+    private Integer cid;
 
     private Integer price;
 
@@ -37,11 +38,9 @@ public class Room {
     public Room() {
     }
 
-    public Room(Integer id, String name, String cat, Integer price, Integer numberOfGuest, Integer floor, Integer area, Boolean wifi, String view, String description) {
-        Long lid = new Long(id);
-        this.id = lid;
+    public Room(String name, Integer cid, Integer price, Integer numberOfGuest, Integer floor, Integer area, Boolean wifi, String view, String description) {
         this.name = name;
-        this.cat = cat;
+        this.cid = cid;
         this.price = price;
         this.numberOfGuest = numberOfGuest;
         this.floor = floor;
@@ -67,12 +66,12 @@ public class Room {
         this.name = name;
     }
 
-    public String getCat() {
-        return cat;
+    public Integer getCid() {
+        return cid;
     }
 
-    public void setCat(String cat) {
-        this.cat = cat;
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     public Integer getPrice() {
@@ -140,7 +139,7 @@ public class Room {
         return "Room{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", cat=" + cat +
+                ", cat=" + cid +
                 ", price=" + price +
                 ", numberOfGuest=" + numberOfGuest +
                 ", floor=" + floor +
