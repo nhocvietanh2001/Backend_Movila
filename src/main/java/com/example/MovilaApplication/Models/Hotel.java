@@ -24,9 +24,14 @@ public class Hotel {
 
     private String phone;
 
+    // Relational
+    // Hotel - Room
     @OneToMany(mappedBy = "hotel")
     @JsonIgnore
     private List<Room> rooms;
+
+    // Relational
+
 
     public Hotel() {
     }

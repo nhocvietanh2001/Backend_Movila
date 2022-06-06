@@ -1,7 +1,10 @@
 package com.example.MovilaApplication.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="user")
@@ -24,6 +27,23 @@ public class User {
 
     private Integer aid;
 
+    // Relational
+    // User - Booking
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    List<Booking> bookingList;
+
+    // User - Account
+    @OneToOne
+    @JoinColumn(
+            name = "Account_ID",
+            referencedColumnName = "aid"
+    )
+    private Account account;
+
+    //Relational
+
+
     public User() {}
 
     public User(String firstName, String lastName, String phone, String mail, Integer aid) {
@@ -32,6 +52,22 @@ public class User {
         this.phone = phone;
         this.mail = mail;
         this.aid = aid;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Long getId() {
@@ -80,5 +116,17 @@ public class User {
 
     public void setAid(Integer aid) {
         this.aid = aid;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", aid=" + aid +
+                '}';
     }
 }

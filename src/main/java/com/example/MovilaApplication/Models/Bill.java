@@ -1,14 +1,17 @@
 package com.example.MovilaApplication.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="bill")
 public class Bill {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer uid;
     private Integer rid;
@@ -16,6 +19,11 @@ public class Bill {
     private Date checkinDate;
     private Date checkoutDate;
     private Integer price;
+
+
+    // Relational
+    @OneToOne(mappedBy = "booked_bill")
+    private Booking billed_booking = new Booking();
 
     public Bill() {
     }
@@ -28,6 +36,14 @@ public class Bill {
         this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
         this.price = price;
+    }
+
+    public Booking getBilled_booking() {
+        return billed_booking;
+    }
+
+    public void setBilled_booking(Booking billed_booking) {
+        this.billed_booking = billed_booking;
     }
 
     public Integer getId() {
@@ -84,5 +100,18 @@ public class Bill {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", rid=" + rid +
+                ", hid=" + hid +
+                ", checkinDate=" + checkinDate +
+                ", checkoutDate=" + checkoutDate +
+                ", price=" + price +
+                '}';
     }
 }

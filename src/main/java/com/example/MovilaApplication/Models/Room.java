@@ -31,10 +31,22 @@ public class Room {
 
     private String description;
 
+
+    // Relational
+    // Room - Hotel
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "hid", referencedColumnName = "hid")
+    @JoinColumn(
+            name = "hid",
+            referencedColumnName = "hid")
     private Hotel hotel;
 
+    // Room - RoomCategory
+
+
+    // Room - Cost
+
+
+    // Relational
     public Room() {
     }
 
