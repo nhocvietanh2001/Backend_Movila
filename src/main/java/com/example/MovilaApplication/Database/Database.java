@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Database;
 
+import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
 import com.example.MovilaApplication.Models.User;
@@ -20,7 +21,7 @@ import java.util.List;
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
     @Bean
-    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository){
+    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository, AccountRepository accountRepository){
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
@@ -34,9 +35,9 @@ public class Database {
                 logger.info("insert data:" + roomRepository.save(roomB));
                 logger.info("insert data:" + roomRepository.save(roomC));
                 List<Room> rooms = new ArrayList<>();
-                //rooms.add(roomA);
-                //rooms.add(roomB);
-                //rooms.add(roomC);
+
+                Account accountA = new Account("vietanh", "123321", "user");
+                logger.info("insert data:" + accountRepository.save(accountA));
 
                 Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184");
                 //hotelA.setRooms(rooms);

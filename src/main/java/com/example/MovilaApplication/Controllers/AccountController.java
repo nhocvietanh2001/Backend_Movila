@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/accounts")
 public class AccountController {
@@ -15,7 +17,7 @@ public class AccountController {
     AccountService accountService;
 
     @GetMapping("/login")
-    ResponseEntity<ResponseObject> Validate(@RequestBody Account account) {
+    Optional<Account> Validate(@RequestBody Account account) {
         return accountService.Validate(account.getUsername(), account.getPassword());
     }
 

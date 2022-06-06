@@ -14,7 +14,9 @@ public class Room {
     @Column(name="rname")
     private String name;
 
-    @Column(name="catid")
+    /*@OneToOne(cascade = CascadeType.ALL)
+    private RoomCategory roomCategory;*/
+
     private Integer cid;
 
     private Integer price;
@@ -69,6 +71,14 @@ public class Room {
     public void setName(String name) {
         this.name = name;
     }
+
+    /*public RoomCategory getRoomCategory() {
+        return roomCategory;
+    }
+
+    public void setRoomCategory(RoomCategory roomCategory) {
+        this.roomCategory = roomCategory;
+    }*/
 
     public Integer getCid() {
         return cid;

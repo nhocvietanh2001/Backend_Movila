@@ -19,16 +19,12 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public ResponseEntity<ResponseObject> Validate(String username, String password) {
+    public Optional<Account> Validate(String username, String password) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsernameAndPassword(username, password);
         if (foundAccount.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Login successfully", foundAccount)
-            );
+            return foundAccount;
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Login unsuccessful", "")
-            );
+            return null;
         }
     }
 
