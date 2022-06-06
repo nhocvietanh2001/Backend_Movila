@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,13 +21,11 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Optional<Account> Validate(String username, String password) {
+    public List<Optional<Account>> Validate(String username, String password) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsernameAndPassword(username, password);
-        if (foundAccount.isPresent()) {
-            return foundAccount;
-        } else {
-            return null;
-        }
+        List<Optional<Account>> accounts = new ArrayList<>();
+        accounts.add(foundAccount);
+        return accounts;
     }
 
     public ResponseEntity<ResponseObject> Register(Account newAccount) {

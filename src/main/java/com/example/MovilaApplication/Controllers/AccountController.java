@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,7 +18,7 @@ public class AccountController {
     AccountService accountService;
 
     @GetMapping("/login")
-    Optional<Account> Validate(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
+    List<Optional<Account>> Validate(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
         Account a = new Account(username, password, role);
         return accountService.Validate(a.getUsername(), a.getPassword());
     }
