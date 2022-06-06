@@ -50,6 +50,10 @@ public class Room {
         this.description = description;
     }
 
+    public Room(String view) {
+        this.view=view;
+    }
+
     public Long getId() {
         return id;
     }

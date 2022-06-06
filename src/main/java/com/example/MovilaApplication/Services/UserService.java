@@ -33,6 +33,7 @@ public class UserService {
         if (UserByMail.isPresent()) {
             return false;
         } else {
+            userRepository.save(newUser);
             return true;
         }
     }
