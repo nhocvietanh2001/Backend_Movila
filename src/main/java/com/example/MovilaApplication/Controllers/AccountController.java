@@ -17,8 +17,9 @@ public class AccountController {
     AccountService accountService;
 
     @GetMapping("/login")
-    Optional<Account> Validate(@RequestBody Account account) {
-        return accountService.Validate(account.getUsername(), account.getPassword());
+    Optional<Account> Validate(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
+        Account a = new Account(username, password, role);
+        return accountService.Validate(a.getUsername(), a.getPassword());
     }
 
     @PostMapping("/register")
