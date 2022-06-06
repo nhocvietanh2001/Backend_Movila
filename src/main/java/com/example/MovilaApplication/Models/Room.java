@@ -40,6 +40,10 @@ public class Room {
             referencedColumnName = "hid")
     private Hotel hotel;
 
+//    // Room-Bill
+//    @OneToOne(mappedBy = "room")
+//    private Bill bill;
+
     // Room - RoomCategory
 
 
@@ -145,6 +149,14 @@ public class Room {
     public Hotel getHotel() {
         return hotel;
     }
+
+//    public Bill getBill() {
+//        return bill;
+//    }
+//
+//    public void setBill(Bill bill) {
+//        this.bill = bill;
+//    }
 
     @Override
     public String toString() {

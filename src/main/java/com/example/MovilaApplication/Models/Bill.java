@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name="bill")
@@ -13,7 +11,6 @@ public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Integer uid;
     private Integer rid;
     private Integer hid;
     private Date checkinDate;
@@ -21,16 +18,36 @@ public class Bill {
     private Integer price;
 
 
+//    // Relational
+//    // Bill - Booking
+//    @OneToOne(mappedBy = "booked_bill")
+//    private Booking billed_booking;
+
+    // Bill - User
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(
+            name = "user_billing",
+            referencedColumnName = "id"
+    )
+    private User user_billing;
+
+//    // Bill - Room
+//    @OneToOne
+//    @JoinColumn(
+//            name = "Bill-Room",
+//            referencedColumnName = "rid"
+//    )
+//    private Room room;
+
     // Relational
-    @OneToOne(mappedBy = "booked_bill")
-    private Booking billed_booking = new Booking();
+
 
     public Bill() {
     }
 
-    public Bill(Integer id, Integer uid, Integer rid, Integer hid, Date checkinDate, Date checkoutDate, Integer price) {
+    public Bill(Integer id, Integer rid, Integer hid, Date checkinDate, Date checkoutDate, Integer price) {
         this.id = id;
-        this.uid = uid;
         this.rid = rid;
         this.hid = hid;
         this.checkinDate = checkinDate;
@@ -38,13 +55,16 @@ public class Bill {
         this.price = price;
     }
 
-    public Booking getBilled_booking() {
-        return billed_booking;
+    public Bill(Integer price) {
+        this.price = price;
     }
-
-    public void setBilled_booking(Booking billed_booking) {
-        this.billed_booking = billed_booking;
-    }
+//    public Booking getBilled_booking() {
+//        return billed_booking;
+//    }
+//
+//    public void setBilled_booking(Booking billed_booking) {
+//        this.billed_booking = billed_booking;
+//    }
 
     public Integer getId() {
         return id;
@@ -54,13 +74,6 @@ public class Bill {
         this.id = id;
     }
 
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
 
     public Integer getRid() {
         return rid;
@@ -102,11 +115,26 @@ public class Bill {
         this.price = price;
     }
 
+    public User getUser_billing() {
+        return user_billing;
+    }
+
+    public void setUser_billing(User user) {
+        this.user_billing = user;
+    }
+//
+//    public Room getRoom() {
+//        return room;
+//    }
+//
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
+
     @Override
     public String toString() {
         return "Bill{" +
                 "id=" + id +
-                ", uid=" + uid +
                 ", rid=" + rid +
                 ", hid=" + hid +
                 ", checkinDate=" + checkinDate +

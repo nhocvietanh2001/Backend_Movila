@@ -1,12 +1,10 @@
 package com.example.MovilaApplication.Database;
 
+import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
 import com.example.MovilaApplication.Models.User;
-import com.example.MovilaApplication.Repositories.HotelRepository;
-import com.example.MovilaApplication.Repositories.RoomRepository;
-import com.example.MovilaApplication.Repositories.AccountRepository;
-import com.example.MovilaApplication.Repositories.UserRepository;
+import com.example.MovilaApplication.Repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +18,7 @@ import java.util.List;
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
     @Bean
-    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository){
+    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository, BillRepository billRepository){
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
@@ -41,6 +39,13 @@ public class Database {
                 Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184");
                 //hotelA.setRooms(rooms);
                 logger.info("insert data:" + hotelRepository.save(hotelA));
+                Bill bill1 = new Bill(19000);
+                Bill bill2 = new Bill(29000);
+                Bill bill3 = new Bill(39000);
+
+                logger.info("insert data:" + billRepository.save(bill1));
+                logger.info("insert data:" + billRepository.save(bill2));
+                logger.info("insert data:" + billRepository.save(bill3));
             }
         };
     }

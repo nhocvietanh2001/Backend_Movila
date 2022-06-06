@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Services;
 
+import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.UserRepository;
@@ -60,5 +61,9 @@ public class UserService {
         } else {
             return false;
         }
+    }
+
+    public List<Bill> GetUserBills(Long uid) {
+       return userRepository.GetBillsById(uid);
     }
 }

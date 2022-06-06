@@ -1,7 +1,9 @@
 package com.example.MovilaApplication.Services;
 
 import com.example.MovilaApplication.Models.Bill;
+import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.BillRepository;
+import com.example.MovilaApplication.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,24 +11,26 @@ import java.util.List;
 
 @Service
 public class BillService {
-    private final BillRepository billRepository;
+    @Autowired
+    BillRepository billRepository;
 
     @Autowired
-    public BillService(BillRepository billRepository) {
-        this.billRepository = billRepository;
-    }
-
+    UserRepository userRepository;
     // Get a bill by its ID
     public Bill GetBillByBillID(Integer bid){
         Bill bill = billRepository.getById(bid);
         return bill;
     }
 
-    // Get a list of bills of a user
-    public List<Bill> GetUserBills(Integer uid){
-        List<Bill> bill = billRepository.findBillsByUid(uid);
-        return bill;
-    }
+//    // Get a list of bills of a user
+//    public List<Bill> GetUserBills(Long uid){
+//        User user = userRepository.findById(uid).get();
+//        List<Bill> billList = billRepository.findBillsByUid(uid);
+//        for(Bill bill: billList){
+//            bill.setUser_billing(user);
+//        }
+//        return billList;
+//    }
 
     // Insert a bill entity
     public Boolean InsertBill(Bill bill){
@@ -46,5 +50,12 @@ public class BillService {
         catch(Exception e){
             return false;
         }
+    }
+
+    public Bill UpdateBill(Integer bid, Long uid) {
+        User user = userRepository.findById(uid).get();
+        Bill bill = billRepository.findById(bid).get();
+        bill.setUser_billing(user);
+        return billRepository.save(bill);
     }
 }

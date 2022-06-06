@@ -30,7 +30,7 @@ public class User {
     // Relational
     // User - Booking
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user_booking")
     List<Booking> bookingList;
 
     // User - Account
@@ -40,6 +40,11 @@ public class User {
             referencedColumnName = "aid"
     )
     private Account account;
+
+    // User - Bill
+    @JsonIgnore
+    @OneToMany(mappedBy = "user_billing")
+    List<Bill> billList;
 
     //Relational
 
@@ -116,6 +121,14 @@ public class User {
 
     public void setAid(Integer aid) {
         this.aid = aid;
+    }
+
+    public List<Bill> getBillList() {
+        return billList;
+    }
+
+    public void setBillList(List<Bill> billList) {
+        this.billList = billList;
     }
 
     @Override

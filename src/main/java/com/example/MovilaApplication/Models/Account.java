@@ -14,7 +14,7 @@ public class Account {
 
     // Relational
     // Account - User
-    @OneToOne(mappedBy = "User.account")
+    @OneToOne(mappedBy = "account")
     private User user;
 
     // Relational
