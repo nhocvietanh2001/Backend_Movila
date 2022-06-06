@@ -12,6 +12,13 @@ public class Account {
     private String password;
     private String role;
 
+    // Relational
+    // Account - User
+    @OneToOne(mappedBy = "User.account")
+    private User user;
+
+    // Relational
+
     public Account() {
     }
 
@@ -19,6 +26,14 @@ public class Account {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {

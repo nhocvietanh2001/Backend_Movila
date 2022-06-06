@@ -1,8 +1,7 @@
 package com.example.MovilaApplication.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="roomcat")
@@ -11,6 +10,11 @@ public class RoomCategory {
     private Integer id;
     private String cname;
 
+    // Relational
+    // RoomCategory - Room
+
+
+    // Relational
     public RoomCategory() {
     }
 
