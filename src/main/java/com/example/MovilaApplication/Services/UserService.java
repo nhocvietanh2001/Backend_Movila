@@ -28,13 +28,12 @@ public class UserService {
         return foundUser;
     }
 
-    public Boolean addNewUser(User newUser){
+    public User addNewUser(User newUser){
         Optional<User> UserByMail = userRepository.findByMail(newUser.getMail());
         if (UserByMail.isPresent()) {
-            return false;
+            return null;
         } else {
-            userRepository.save(newUser);
-            return true;
+            return userRepository.save(newUser);
         }
     }
 

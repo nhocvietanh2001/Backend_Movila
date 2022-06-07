@@ -1,7 +1,8 @@
 package com.example.MovilaApplication.Controllers;
 
-import com.example.MovilaApplication.Models.Account;
-import com.example.MovilaApplication.Models.ResponseObject;
+import com.example.MovilaApplication.Models.*;
+import com.example.MovilaApplication.Repositories.AccountRepository;
+import com.example.MovilaApplication.Repositories.UserRepository;
 import com.example.MovilaApplication.Services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,10 @@ import java.util.Optional;
 public class AccountController {
     @Autowired
     AccountService accountService;
+    @Autowired
+    AccountRepository accountRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/login")
     List<Optional<Account>> Validate(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
@@ -31,6 +36,16 @@ public class AccountController {
     @PutMapping("/update")
     ResponseEntity<ResponseObject> Update(@RequestBody Account account) {
         return accountService.Update(account);
+    }
+
+    @PutMapping("/{aid}/users/{uid}")
+    public Account assignToHotel(@PathVariable Long aid, @PathVariable Long uid) {
+        Account account = accountRepository.findById(aid).get();
+        User user = userRepository.findById(uid).get();
+        account.setUser(user);
+        user.setAccount(account);
+        userRepository.save(user);
+        return accountRepository.save(account);
     }
 
     @DeleteMapping("/delete")

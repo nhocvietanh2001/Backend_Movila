@@ -16,7 +16,7 @@ public class Account {
     private String role;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
+    @JoinColumn(name="uid")
     private User user;
 
     public Account() {

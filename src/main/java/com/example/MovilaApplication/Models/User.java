@@ -6,10 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name="user")
+@Table(name="userdb")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "uid")
     private Long id;
 
     @Column (name="ufirst_name")
@@ -83,5 +84,17 @@ public class User {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", account=" + account +
+                '}';
     }
 }

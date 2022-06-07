@@ -3,6 +3,7 @@ package com.example.MovilaApplication.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel")
     @JsonIgnore
-    private List<Room> rooms;
+    private List<Room> rooms = new ArrayList<>();
 
     public Hotel() {
     }
@@ -85,8 +86,8 @@ public class Hotel {
         return rooms;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRooms(Room room) {
+        this.rooms.add(room);
     }
 
     public String getImageURL() {

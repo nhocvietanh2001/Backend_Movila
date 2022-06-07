@@ -28,8 +28,8 @@ public class UserController {
     }
 
     // Add new user
-    @PostMapping("/new_user")
-    Boolean addNewUser(@RequestBody User newUser){
+    @PostMapping
+    User addNewUser(@RequestBody User newUser){
         return userService.addNewUser(newUser);
     }
 
