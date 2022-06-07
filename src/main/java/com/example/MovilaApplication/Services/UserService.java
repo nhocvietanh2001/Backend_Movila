@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -63,7 +64,13 @@ public class UserService {
         }
     }
 
-    public List<Bill> GetUserBills(Long uid) {
-       return userRepository.GetBillsById(uid);
+    public Set<Bill> GetUserBills(Long uid) {
+        try{
+            User user = userRepository.findById(uid).get();
+            return user.getBillList();
+        }
+       catch (Exception e){
+            return null;
+       }
     }
 }

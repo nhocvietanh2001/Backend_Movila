@@ -18,8 +18,13 @@ public class BillService {
     UserRepository userRepository;
     // Get a bill by its ID
     public Bill GetBillByBillID(Integer bid){
-        Bill bill = billRepository.getById(bid);
-        return bill;
+        try{
+            Bill bill = billRepository.findById(bid).get();
+            return bill;
+        }
+        catch(Exception e){
+            return null;
+        }
     }
 
 //    // Get a list of bills of a user
@@ -33,12 +38,16 @@ public class BillService {
 //    }
 
     // Insert a bill entity
-    public Boolean InsertBill(Bill bill){
-        if(billRepository.existsById(bill.getId())){
-            return false;
+    public Bill InsertBill(Bill bill, Long uid){
+        try {
+            User user = userRepository.findById(uid).get();
+            bill.setUser_billing(user);
+            billRepository.save(bill);
+            return bill;
         }
-        billRepository.save(bill);
-        return true;
+        catch (Exception e){
+            return null;
+        }
     }
 
     // Delete a bill by its bill id
@@ -52,10 +61,4 @@ public class BillService {
         }
     }
 
-    public Bill UpdateBill(Integer bid, Long uid) {
-        User user = userRepository.findById(uid).get();
-        Bill bill = billRepository.findById(bid).get();
-        bill.setUser_billing(user);
-        return billRepository.save(bill);
-    }
 }

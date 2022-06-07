@@ -28,9 +28,9 @@ public class BillController {
 //        return billService.GetUserBills(uid);
 //    }
 
-    @PostMapping("/InsertBill")
-    Boolean InsertBill(@RequestBody Bill bill){
-        return billService.InsertBill(bill);
+    @PostMapping("/InsertBill/users/{uid}")
+    Bill InsertBill(@RequestBody Bill bill, @PathVariable Long uid){
+        return billService.InsertBill(bill, uid);
     }
 
     @DeleteMapping("/DeleteBill/{bid}")
@@ -38,8 +38,5 @@ public class BillController {
         return billService.DeleteBill(bid);
     }
 
-    @PutMapping("/{bid}/users/{uid}")
-    public Bill UpdateBill(@PathVariable Integer bid, @PathVariable Long uid) {
-        return billService.UpdateBill(bid, uid);
-    }
+
 }

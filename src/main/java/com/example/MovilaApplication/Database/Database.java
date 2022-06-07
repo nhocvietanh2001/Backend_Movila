@@ -22,8 +22,30 @@ public class Database {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
+
+
                 User userA = new User("Viet", "Anh", "123456789", "vietanh@gmail.com", 1);
+                User userB= new User("Pham Viet", "Anh", "0123213789", "vietanh123@gmail.com", 2);
                 logger.info("insert data:" + userRepository.save(userA));
+                logger.info("insert data:" + userRepository.save(userB));
+
+                Bill bill1 = new Bill(19000);
+                bill1.setUser_billing(userA);
+                logger.info("insert data:" + billRepository.save(bill1));
+
+                Bill bill2 = new Bill(29000);
+                bill2.setUser_billing(userA);
+                logger.info("insert data:" + billRepository.save(bill2));
+
+                Bill bill3 = new Bill(39000);
+                logger.info("insert data:" + billRepository.save(bill3));
+
+//                userA.getBillList().add(bill1);
+//                userA.getBillList().add(bill2);
+
+//                logger.info("insert data:" + userRepository.save(userA));
+//                logger.info("insert data:" + userRepository.save(userB));
+
 
                 Room roomA = new Room("101", 1, 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much");
                 logger.info("insert data:" + roomRepository.save(roomA));
@@ -39,13 +61,7 @@ public class Database {
                 Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184");
                 //hotelA.setRooms(rooms);
                 logger.info("insert data:" + hotelRepository.save(hotelA));
-                Bill bill1 = new Bill(19000);
-                Bill bill2 = new Bill(29000);
-                Bill bill3 = new Bill(39000);
 
-                logger.info("insert data:" + billRepository.save(bill1));
-                logger.info("insert data:" + billRepository.save(bill2));
-                logger.info("insert data:" + billRepository.save(bill3));
             }
         };
     }

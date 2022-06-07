@@ -24,7 +24,6 @@ public class Booking {
 //    private Bill booked_bill;
 
     // Book-User
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "User_ID",

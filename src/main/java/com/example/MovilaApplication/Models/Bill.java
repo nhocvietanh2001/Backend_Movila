@@ -11,6 +11,7 @@ public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private Long uid;
     private Integer rid;
     private Integer hid;
     private Date checkinDate;
@@ -24,8 +25,7 @@ public class Bill {
 //    private Booking billed_booking;
 
     // Bill - User
-    @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "user_billing",
             referencedColumnName = "id"
@@ -46,8 +46,9 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(Integer id, Integer rid, Integer hid, Date checkinDate, Date checkoutDate, Integer price) {
+    public Bill(Integer id, Long uid, Integer rid, Integer hid, Date checkinDate, Date checkoutDate, Integer price) {
         this.id = id;
+        this.uid = uid;
         this.rid = rid;
         this.hid = hid;
         this.checkinDate = checkinDate;
@@ -122,7 +123,15 @@ public class Bill {
     public void setUser_billing(User user) {
         this.user_billing = user;
     }
-//
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
+    }
+    //
 //    public Room getRoom() {
 //        return room;
 //    }
@@ -131,15 +140,18 @@ public class Bill {
 //        this.room = room;
 //    }
 
+
     @Override
     public String toString() {
         return "Bill{" +
                 "id=" + id +
+                ", uid=" + uid +
                 ", rid=" + rid +
                 ", hid=" + hid +
                 ", checkinDate=" + checkinDate +
                 ", checkoutDate=" + checkoutDate +
                 ", price=" + price +
+                ", user_billing=" + user_billing +
                 '}';
     }
 }

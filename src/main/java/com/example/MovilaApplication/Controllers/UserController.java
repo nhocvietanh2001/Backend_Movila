@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -30,7 +31,7 @@ public class UserController {
 
     // Get User Bill List
     @GetMapping(path = "/GetUserBills/{uid}")
-    List<Bill> GetUserBills(@PathVariable Long uid){
+    Set<Bill> GetUserBills(@PathVariable Long uid){
         return userService.GetUserBills(uid);
     }
     // Add new user
