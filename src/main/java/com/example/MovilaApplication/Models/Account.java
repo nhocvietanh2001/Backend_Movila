@@ -1,8 +1,11 @@
 package com.example.MovilaApplication.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name="account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,6 +14,10 @@ public class Account {
     private String username;
     private String password;
     private String role;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
+    private User user;
 
     public Account() {
     }
@@ -51,6 +58,14 @@ public class Account {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

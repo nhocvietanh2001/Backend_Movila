@@ -1,6 +1,8 @@
 package com.example.MovilaApplication.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,16 +24,17 @@ public class User {
     @Column (name="umail")
     private String mail;
 
-    private Integer aid;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private Account account;
 
     public User() {}
 
-    public User(String firstName, String lastName, String phone, String mail, Integer aid) {
+    public User(String firstName, String lastName, String phone, String mail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.mail = mail;
-        this.aid = aid;
     }
 
     public Long getId() {
@@ -74,11 +77,11 @@ public class User {
         this.mail = mail;
     }
 
-    public Integer getAid() {
-        return aid;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAid(Integer aid) {
-        this.aid = aid;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

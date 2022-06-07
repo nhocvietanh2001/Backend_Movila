@@ -19,8 +19,12 @@ public class Database {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                User userA = new User("Viet", "Anh", "123456789", "vietanh@gmail.com", 1);
+                User userA = new User("Viet", "Anh", "123456789", "vietanh@gmail.com");
+                Account accountA = new Account("vietanh", "123321", "user");
+                accountA.setUser(userA);
+                userA.setAccount(accountA);
                 logger.info("insert data:" + userRepository.save(userA));
+                logger.info("insert data:" + accountRepository.save(accountA));
 
                 Room roomA = new Room("101","luxury", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "much much not to","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
                 Room roomB = new Room("102","luxury", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
@@ -30,8 +34,7 @@ public class Database {
                 logger.info("insert data:" + roomRepository.save(roomC));
                 List<Room> rooms = new ArrayList<>();
 
-                Account accountA = new Account("vietanh", "123321", "user");
-                logger.info("insert data:" + accountRepository.save(accountA));
+
 
                 Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184");
                 //hotelA.setRooms(rooms);
