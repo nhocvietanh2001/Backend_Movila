@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +16,11 @@ public class RoomService {
     RoomRepository roomRepository;
 
     // Get
-    public Optional<Room> findRoomByID(long id){
+    public List<Optional<Room>> findRoomByID(long id){
         Optional<Room> optionalRoom = roomRepository.findById(id);
-        return optionalRoom;
+        List<Optional<Room>> listRooms = new ArrayList<>();
+        listRooms.add(optionalRoom);
+        return listRooms;
     }
 
     // Post

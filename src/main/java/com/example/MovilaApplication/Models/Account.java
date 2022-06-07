@@ -15,7 +15,7 @@ public class Account {
     private String password;
     private String role;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="uid")
     private User user;
 

@@ -22,8 +22,20 @@ public class AccountController {
     @Autowired
     UserRepository userRepository;
 
+    @GetMapping
+    List<Account> getAll() {
+        List<Account> hotels = accountRepository.findAll();
+        return hotels;
+    }
+
     @GetMapping("/login")
-    List<Optional<Account>> Validate(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
+    List<Optional<Account>> ValidatePa(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
+        Account a = new Account(username, password, role);
+        return accountService.Validate(a.getUsername(), a.getPassword());
+    }
+
+    @GetMapping("/loginjson")
+    List<Optional<Account>> ValidateJ(@RequestBody String username, @RequestBody String password, @RequestBody String role) {
         Account a = new Account(username, password, role);
         return accountService.Validate(a.getUsername(), a.getPassword());
     }
