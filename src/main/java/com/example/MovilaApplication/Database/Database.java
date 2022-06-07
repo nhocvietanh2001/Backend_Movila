@@ -1,13 +1,7 @@
 package com.example.MovilaApplication.Database;
 
-import com.example.MovilaApplication.Models.Account;
-import com.example.MovilaApplication.Models.Hotel;
-import com.example.MovilaApplication.Models.Room;
-import com.example.MovilaApplication.Models.User;
-import com.example.MovilaApplication.Repositories.HotelRepository;
-import com.example.MovilaApplication.Repositories.RoomRepository;
-import com.example.MovilaApplication.Repositories.AccountRepository;
-import com.example.MovilaApplication.Repositories.UserRepository;
+import com.example.MovilaApplication.Models.*;
+import com.example.MovilaApplication.Repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -28,10 +22,10 @@ public class Database {
                 User userA = new User("Viet", "Anh", "123456789", "vietanh@gmail.com", 1);
                 logger.info("insert data:" + userRepository.save(userA));
 
-                Room roomA = new Room("101", 1, 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much");
+                Room roomA = new Room("101","luxury", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "much much not to","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
+                Room roomB = new Room("102","luxury", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
+                Room roomC = new Room("103","normal", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
                 logger.info("insert data:" + roomRepository.save(roomA));
-                Room roomB = new Room("102", 1, 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much");
-                Room roomC = new Room("103", 1, 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much");
                 logger.info("insert data:" + roomRepository.save(roomB));
                 logger.info("insert data:" + roomRepository.save(roomC));
                 List<Room> rooms = new ArrayList<>();
@@ -42,6 +36,8 @@ public class Database {
                 Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184");
                 //hotelA.setRooms(rooms);
                 logger.info("insert data:" + hotelRepository.save(hotelA));
+
+
             }
         };
     }

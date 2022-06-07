@@ -14,10 +14,7 @@ public class Room {
     @Column(name="rname")
     private String name;
 
-    /*@OneToOne(cascade = CascadeType.ALL)
-    private RoomCategory roomCategory;*/
-
-    private Integer cid;
+    private String cat;
 
     private Integer price;
 
@@ -33,6 +30,8 @@ public class Room {
 
     private String description;
 
+    private String imageURL;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hid", referencedColumnName = "hid")
     private Hotel hotel;
@@ -40,9 +39,9 @@ public class Room {
     public Room() {
     }
 
-    public Room(String name, Integer cid, Integer price, Integer numberOfGuest, Integer floor, Integer area, Boolean wifi, String view, String description) {
+    public Room(String name, String cat, Integer price, Integer numberOfGuest, Integer floor, Integer area, Boolean wifi, String view, String description, String imageURL) {
         this.name = name;
-        this.cid = cid;
+        //this.roomCategory = roomCategory;
         this.price = price;
         this.numberOfGuest = numberOfGuest;
         this.floor = floor;
@@ -50,6 +49,7 @@ public class Room {
         this.wifi = wifi;
         this.view = view;
         this.description = description;
+        this.imageURL = imageURL;
     }
 
     public Room(String view) {
@@ -72,20 +72,12 @@ public class Room {
         this.name = name;
     }
 
-    /*public RoomCategory getRoomCategory() {
-        return roomCategory;
+    public String getCat() {
+        return cat;
     }
 
-    public void setRoomCategory(RoomCategory roomCategory) {
-        this.roomCategory = roomCategory;
-    }*/
-
-    public Integer getCid() {
-        return cid;
-    }
-
-    public void setCid(Integer cid) {
-        this.cid = cid;
+    public void setCat(String cat) {
+        this.cat = cat;
     }
 
     public Integer getPrice() {
@@ -148,12 +140,24 @@ public class Room {
         return hotel;
     }
 
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", cat=" + cid +
+                ", cat='" + cat + '\'' +
                 ", price=" + price +
                 ", numberOfGuest=" + numberOfGuest +
                 ", floor=" + floor +
@@ -161,11 +165,8 @@ public class Room {
                 ", wifi=" + wifi +
                 ", view='" + view + '\'' +
                 ", description='" + description + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 ", hotel=" + hotel +
                 '}';
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
     }
 }

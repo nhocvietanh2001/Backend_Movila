@@ -1,14 +1,14 @@
 package com.example.MovilaApplication.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name="bill")
 public class Bill {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="bid")
     private Integer id;
     private Integer uid;
     private Integer rid;

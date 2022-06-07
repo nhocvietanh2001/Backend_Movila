@@ -85,4 +85,16 @@ public class Hotel {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", aid=" + aid +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", rooms=" + rooms +
+                '}';
+    }
 }
