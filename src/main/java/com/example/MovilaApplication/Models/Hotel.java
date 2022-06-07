@@ -24,6 +24,8 @@ public class Hotel {
 
     private String phone;
 
+    private String imageURL;
+
     @OneToMany(mappedBy = "hotel")
     @JsonIgnore
     private List<Room> rooms;
@@ -31,11 +33,12 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(String name, Integer aid, String address, String phone) {
+    public Hotel(String name, Integer aid, String address, String phone, String imageURL) {
         this.name = name;
         this.aid = aid;
         this.address = address;
         this.phone = phone;
+        this.imageURL = imageURL;
     }
 
     public Long getId() {
@@ -84,6 +87,14 @@ public class Hotel {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     @Override

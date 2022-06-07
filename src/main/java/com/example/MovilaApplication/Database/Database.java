@@ -36,7 +36,7 @@ public class Database {
 
 
 
-                Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184");
+                Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184", "https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/5.jpg?alt=media&token=dd1b7124-5ad6-4860-8978-2a6e7c147cb6");
                 //hotelA.setRooms(rooms);
                 logger.info("insert data:" + hotelRepository.save(hotelA));
 
