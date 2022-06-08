@@ -5,6 +5,9 @@ import com.example.MovilaApplication.Repositories.RoomStatusRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 public class RoomStatusService {
 
@@ -16,17 +19,25 @@ public class RoomStatusService {
         this.roomStatusRepositories = roomStatusRepositories;
     }
 
-    public RoomStatus GetRoomStatus(Integer bid) {
-        return roomStatusRepositories.findById(bid).get();
+    public Set<RoomStatus> GetRoomStatus(Integer bid) {
+        Set<RoomStatus> roomStatusSet = new HashSet<>();
+        roomStatusSet.add(roomStatusRepositories.findById(bid).get());
+        return roomStatusSet;
     }
 
-    public RoomStatus MakeStatus(RoomStatus roomStatus) {
-        return roomStatusRepositories.save(roomStatus);
+    public Set<RoomStatus> MakeStatus(RoomStatus roomStatus) {
+        Set<RoomStatus> roomStatusSet = new HashSet<>();
+        roomStatusSet.add(roomStatus);
+        roomStatusRepositories.save(roomStatus);
+        return roomStatusSet;
     }
 
-    public RoomStatus UpdateStatus(RoomStatus roomStatus, Long rid) {
+    public Set<RoomStatus> UpdateStatus(RoomStatus roomStatus, Long rid) {
+        Set<RoomStatus> roomStatusSet = new HashSet<>();
         RoomStatus updatingRoomStatus = roomStatusRepositories.findRoomStatusByRid(rid);
         roomStatus.setId(updatingRoomStatus.getId());
-        return roomStatusRepositories.save(roomStatus);
+        roomStatusRepositories.save(roomStatus);
+        roomStatusSet.add(roomStatus);
+        return roomStatusSet;
     }
 }

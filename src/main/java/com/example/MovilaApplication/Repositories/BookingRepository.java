@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
@@ -16,4 +15,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Modifying
     @Query("DELETE FROM Booking b WHERE b.id = ?1")
     Integer deleteBooking(Integer booking_id);
+
+    @Query("SELECT b FROM Booking b WHERE b.uid = ?1")
+    Booking findByUserID(Long uid);
 }
