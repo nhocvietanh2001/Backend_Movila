@@ -169,4 +169,8 @@ public class Room {
                 ", hotel=" + hotel +
                 '}';
     }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 }

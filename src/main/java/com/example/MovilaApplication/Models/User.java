@@ -4,6 +4,9 @@ package com.example.MovilaApplication.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="userdb")
@@ -29,6 +32,31 @@ public class User {
     @JsonIgnore
     private Account account;
 
+    // Relational
+    // User - Booking
+    @JsonIgnore
+    @OneToMany(
+            mappedBy = "user_booking",
+            fetch = FetchType.EAGER
+    )
+    Set<Booking> bookingList = new HashSet<>();
+
+    // User - Account
+    @OneToOne
+    @JoinColumn(
+            name = "Account_ID",
+            referencedColumnName = "aid"
+    )
+    private Account account;
+
+    // User - Bill
+    @JsonIgnore
+    @OneToMany(mappedBy = "user_billing", fetch = FetchType.EAGER)
+    Set<Bill> billList = new HashSet<>();
+
+    //Relational
+
+
     public User() {}
 
     public User(String firstName, String lastName, String phone, String mail) {
@@ -36,6 +64,14 @@ public class User {
         this.lastName = lastName;
         this.phone = phone;
         this.mail = mail;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Long getId() {
@@ -94,6 +130,36 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", mail='" + mail + '\'' +
+                ", account=" + account +
+                '}';
+    }
+
+    public Set<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(Set<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    public Set<Bill> getBillList() {
+        return billList;
+    }
+
+    public void setBillList(Set<Bill> billList) {
+        this.billList = billList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", aid=" + aid +
+                ", bookingList=" + bookingList +
                 ", account=" + account +
                 '}';
     }

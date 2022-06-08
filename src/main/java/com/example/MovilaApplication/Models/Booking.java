@@ -1,5 +1,7 @@
 package com.example.MovilaApplication.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,16 +10,63 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer uid;
+
+    private Long uid;
     private Integer rid;
 
+    // Relational
+
+    // Book-User
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(
+            name = "User_ID",
+            referencedColumnName = "id" // id of the user
+    )
+    private User user_booking;
+
+    // Book-Room
+    @OneToOne()
+    @JoinColumn(
+            name = "booked_room",
+            referencedColumnName = "rid"
+    )
+    private Room booked_room;
+
+    // Relational
+
+    // Constructors
     public Booking() {
     }
 
-    public Booking(Integer id, Integer uid, Integer rid) {
+    public Booking(Integer id, Long uid, Integer rid) {
         this.id = id;
         this.uid = uid;
         this.rid = rid;
+    }
+
+
+//    public Bill getBooked_bill() {
+//        return booked_bill;
+//    }
+//
+//    public void setBooked_bill(Bill booked_bill) {
+//        this.booked_bill = booked_bill;
+//    }
+
+    public User getUser_booking() {
+        return user_booking;
+    }
+
+    public void setUser_booking(User user) {
+        this.user_booking = user;
+    }
+
+    public Room getBooked_room() {
+        return booked_room;
+    }
+
+    public void setBooked_room(Room booked_room) {
+        this.booked_room = booked_room;
     }
 
     public Integer getId() {
@@ -28,11 +77,11 @@ public class Booking {
         this.id = id;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
