@@ -36,10 +36,10 @@ public class HotelService {
             Optional<Hotel> updateHotel = hotelRepository.findById(id)
                     .map(hotel -> {
                         hotel.setName(newHotel.getName());
-                        //hotel.setAid(hotel.getAid());
-                        hotel.setAddress(hotel.getAddress());
-                        hotel.setPhone(hotel.getPhone());
-                        hotel.setImageURL(hotel.getImageURL());
+                        hotel.setEmail(newHotel.getEmail());
+                        hotel.setAddress(newHotel.getAddress());
+                        hotel.setPhone(newHotel.getPhone());
+                        hotel.setImageURL(newHotel.getImageURL());
 
                         return hotelRepository.save(hotel);
                     });
