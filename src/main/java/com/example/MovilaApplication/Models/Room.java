@@ -7,15 +7,14 @@ import javax.persistence.*;
 @Table(name="room")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="rid")
     private Long id;
 
     @Column(name="rname")
     private String name;
 
-    @Column(name="catid")
-    private Integer cid;
+    private String cat;
 
     private Integer price;
 
@@ -31,32 +30,18 @@ public class Room {
 
     private String description;
 
+    private String imageURL;
 
-    // Relational
-    // Room - Hotel
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "hid",
-            referencedColumnName = "hid")
+    @JoinColumn(name = "hid", referencedColumnName = "hid")
     private Hotel hotel;
 
-//    // Room-Bill
-//    @OneToOne(mappedBy = "room")
-//    private Bill bill;
-
-    // Room - RoomCategory
-
-
-    // Room - Cost
-
-
-    // Relational
     public Room() {
     }
 
-    public Room(String name, Integer cid, Integer price, Integer numberOfGuest, Integer floor, Integer area, Boolean wifi, String view, String description) {
+    public Room(String name, String cat, Integer price, Integer numberOfGuest, Integer floor, Integer area, Boolean wifi, String view, String description, String imageURL) {
         this.name = name;
-        this.cid = cid;
+        //this.roomCategory = roomCategory;
         this.price = price;
         this.numberOfGuest = numberOfGuest;
         this.floor = floor;
@@ -64,6 +49,11 @@ public class Room {
         this.wifi = wifi;
         this.view = view;
         this.description = description;
+        this.imageURL = imageURL;
+    }
+
+    public Room(String view) {
+        this.view=view;
     }
 
     public Long getId() {
@@ -82,12 +72,12 @@ public class Room {
         this.name = name;
     }
 
-    public Integer getCid() {
-        return cid;
+    public String getCat() {
+        return cat;
     }
 
-    public void setCid(Integer cid) {
-        this.cid = cid;
+    public void setCat(String cat) {
+        this.cat = cat;
     }
 
     public Integer getPrice() {
@@ -150,20 +140,24 @@ public class Room {
         return hotel;
     }
 
-//    public Bill getBill() {
-//        return bill;
-//    }
-//
-//    public void setBill(Bill bill) {
-//        this.bill = bill;
-//    }
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 
     @Override
     public String toString() {
         return "Room{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", cat=" + cid +
+                ", cat='" + cat + '\'' +
                 ", price=" + price +
                 ", numberOfGuest=" + numberOfGuest +
                 ", floor=" + floor +
@@ -171,11 +165,8 @@ public class Room {
                 ", wifi=" + wifi +
                 ", view='" + view + '\'' +
                 ", description='" + description + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 ", hotel=" + hotel +
                 '}';
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
     }
 }

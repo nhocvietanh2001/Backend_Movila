@@ -1,9 +1,6 @@
 package com.example.MovilaApplication.Database;
 
-import com.example.MovilaApplication.Models.Bill;
-import com.example.MovilaApplication.Models.Hotel;
-import com.example.MovilaApplication.Models.Room;
-import com.example.MovilaApplication.Models.User;
+import com.example.MovilaApplication.Models.*;
 import com.example.MovilaApplication.Repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,49 +15,34 @@ import java.util.List;
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
     @Bean
-    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository, BillRepository billRepository){
+    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository, AccountRepository accountRepository){
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-
-
-                User userA = new User("Viet", "Anh", "123456789", "vietanh@gmail.com", 1);
-                User userB= new User("Pham Viet", "Anh", "0123213789", "vietanh123@gmail.com", 2);
+                User userA = new User("Viet", "Anh", "123456789", "vietanh@gmail.com");
+                Account accountA = new Account("vietanh", "123321", "user");
+                accountA.setUser(userA);
+                userA.setAccount(accountA);
                 logger.info("insert data:" + userRepository.save(userA));
-                logger.info("insert data:" + userRepository.save(userB));
-
-                Bill bill1 = new Bill(19000);
-                bill1.setUser_billing(userA);
-                logger.info("insert data:" + billRepository.save(bill1));
-
-                Bill bill2 = new Bill(29000);
-                bill2.setUser_billing(userA);
-                logger.info("insert data:" + billRepository.save(bill2));
-
-                Bill bill3 = new Bill(39000);
-                logger.info("insert data:" + billRepository.save(bill3));
-
-//                userA.getBillList().add(bill1);
-//                userA.getBillList().add(bill2);
-
-//                logger.info("insert data:" + userRepository.save(userA));
-//                logger.info("insert data:" + userRepository.save(userB));
-
-
-                Room roomA = new Room("101", 1, 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much");
+                //logger.info("insert data:" + accountRepository.save(accountA));
+                System.out.println("end for 1");
+                Room roomA = new Room("101","luxury", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "much much not to","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
+                Room roomB = new Room("102","luxury", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
+                Room roomC = new Room("103","normal", 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much","https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/1.jpg?alt=media&token=768ec2b9-503f-4232-8355-1977aa081509");
                 logger.info("insert data:" + roomRepository.save(roomA));
-                Room roomB = new Room("102", 1, 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much");
-                Room roomC = new Room("103", 1, 19000, 2, 1, 300, Boolean.TRUE, "seaview", "not so much");
                 logger.info("insert data:" + roomRepository.save(roomB));
                 logger.info("insert data:" + roomRepository.save(roomC));
-                List<Room> rooms = new ArrayList<>();
-                //rooms.add(roomA);
-                //rooms.add(roomB);
-                //rooms.add(roomC);
 
-                Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184");
-                //hotelA.setRooms(rooms);
-                logger.info("insert data:" + hotelRepository.save(hotelA));
+                Account accountHotelA = new Account("hotel", "123123", "hotel");
+
+                Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184", "https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/5.jpg?alt=media&token=dd1b7124-5ad6-4860-8978-2a6e7c147cb6");
+                System.out.println("end for 2");
+                accountHotelA.setHotelaccount(hotelA);
+                hotelA.setAccount(accountHotelA);
+                System.out.println("end for 3");
+                logger.info("insert data:" + accountRepository.save(accountHotelA));
+                //logger.info("insert data:" + hotelRepository.save(hotelA));
+
 
             }
         };

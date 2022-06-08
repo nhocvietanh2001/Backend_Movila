@@ -3,6 +3,7 @@ package com.example.MovilaApplication.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,36 +12,36 @@ import java.util.Set;
 @Table(name= "hotel")
 public class Hotel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="hid")
     private Long id;
 
     @Column(name="hname")
     private String name;
 
-    private Integer aid;
-
     private String address;
 
     private String phone;
 
-    // Relational
-    // Hotel - Room
+    private String imageURL;
+
     @OneToMany(mappedBy = "hotel")
     @JsonIgnore
-    private List<Room> rooms;
+    private List<Room> rooms = new ArrayList<>();
 
-    // Relational
-
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotelaccount")
+    @JsonIgnore
+    private Account account;
 
     public Hotel() {
     }
 
-    public Hotel(String name, Integer aid, String address, String phone) {
+    public Hotel(String name, Integer aid, String address, String phone, String imageURL) {
         this.name = name;
-        this.aid = aid;
+        //this.aid = aid;
         this.address = address;
         this.phone = phone;
+        this.imageURL = imageURL;
     }
 
     public Long getId() {
@@ -59,13 +60,13 @@ public class Hotel {
         this.name = name;
     }
 
-    public Integer getAid() {
+    /*public Integer getAid() {
         return aid;
     }
 
     public void setAid(Integer aid) {
         this.aid = aid;
-    }
+    }*/
 
     public String getAddress() {
         return address;
@@ -87,7 +88,35 @@ public class Hotel {
         return rooms;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRooms(Room room) {
+        this.rooms.add(room);
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                //", aid=" + aid +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", rooms=" + rooms +
+                '}';
     }
 }

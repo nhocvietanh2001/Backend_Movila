@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name= "booking")
 public class Booking {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private Long uid;
@@ -20,7 +20,7 @@ public class Booking {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "User_ID",
-            referencedColumnName = "id" // id of the user
+            referencedColumnName = "uid" // id of the user
     )
     private User user_booking;
 

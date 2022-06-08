@@ -1,39 +1,35 @@
 package com.example.MovilaApplication.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name="account")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="aid")
     private Long id;
     private String username;
     private String password;
     private String role;
 
-    // Relational
-    // Account - User
-    @OneToOne(mappedBy = "account")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="uid")
     private User user;
 
-    // Relational
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="hid")
+    private Hotel hotelaccount;
 
     public Account() {
     }
 
-    public Account(String username, String password, String userID, String role) {
+    public Account(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Long getId() {
@@ -66,6 +62,22 @@ public class Account {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Hotel getHotelaccount() {
+        return hotelaccount;
+    }
+
+    public void setHotelaccount(Hotel hotelaccount) {
+        this.hotelaccount = hotelaccount;
     }
 
     @Override

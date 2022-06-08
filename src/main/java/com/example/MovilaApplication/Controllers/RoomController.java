@@ -2,12 +2,10 @@ package com.example.MovilaApplication.Controllers;
 
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
-import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Repositories.HotelRepository;
 import com.example.MovilaApplication.Repositories.RoomRepository;
 import com.example.MovilaApplication.Services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public class RoomController {
         return roomService.getAllRooms();
     }
     @GetMapping(path="{id}")
-    public Optional<Room> findRoomByID(@PathVariable long id) {
+    public List<Optional<Room>> findRoomByID(@PathVariable long id) {
         return roomService.findRoomByID(id);
     }
     @PostMapping
@@ -46,6 +44,7 @@ public class RoomController {
         room.setHotel(hotel);
         return roomRepository.save(room);
     }
+
     @DeleteMapping(path="{id}")
     public Boolean deleteRoom(@PathVariable("id") Long id){
         return roomService.deleteRoom(id);

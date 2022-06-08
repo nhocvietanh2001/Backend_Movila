@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Services;
 
+import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.Booking;
 import com.example.MovilaApplication.Models.ResponseObject;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,33 +28,44 @@ public class UserService {
         return allUser;
     }
 
-    public Optional<User> findUserById(Long id){
+    public List<Optional<User>> findUserById(Long id){
         Optional<User> foundUser = userRepository.findById(id);
-        return foundUser;
+        List<Optional<User>> users = new ArrayList<>();
+        users.add(foundUser);
+        return users;
     }
 
-    public Boolean addNewUser(User newUser){
-        Optional<User> UserByMail = userRepository.findByMail(newUser.getMail());
-        if (UserByMail.isPresent()) {
-            return false;
-        } else {
-            return true;
-        }
+    public List<Account> findAccountOfUserById(Long id){
+        User foundUser = userRepository.findById(id).get();
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(foundUser.getAccount());
+        return accounts;
     }
 
-    public Optional<User> updateUser(User newUser, Long id){
+    public User addNewUser(User newUser){
         Optional<User> UserByMail = userRepository.findByMail(newUser.getMail());
         if (UserByMail.isPresent()) {
             return null;
         } else {
+            return userRepository.save(newUser);
+        }
+    }
+
+    public Optional<User> updateUser(User newUser, Long id){
+        Boolean exists = userRepository.existsById(id);
+        if (exists) {
             Optional<User> updateUser = userRepository.findById(id)
                     .map(user -> {
+                        user.setFirstName(newUser.getFirstName());
+                        user.setLastName(newUser.getLastName());
                         user.setPhone(newUser.getPhone());
                         user.setMail(newUser.getMail());
+
                         return userRepository.save(user);
                     });
             return updateUser;
         }
+        return null;
     }
 
     public Boolean deleteUser(Long id){

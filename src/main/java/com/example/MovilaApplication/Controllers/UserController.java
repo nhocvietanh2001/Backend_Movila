@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Controllers;
 
+import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.Booking;
 import com.example.MovilaApplication.Models.ResponseObject;
@@ -26,8 +27,13 @@ public class UserController {
     }
     // Get user by ID
     @GetMapping("/{id}")
-    Optional<User> findUserById(@PathVariable Long id){
+    List<Optional<User>> findUserById(@PathVariable Long id){
         return userService.findUserById(id);
+    }
+
+    @GetMapping("/{id}/getaccount")
+    List<Account> findAccountById(@PathVariable Long id){
+        return userService.findAccountOfUserById(id);
     }
 
     // Get User Bill List
@@ -36,14 +42,14 @@ public class UserController {
         return userService.GetUserBills(uid);
     }
     // Add new user
-    @PostMapping("/new-user")
-    Boolean addNewUser(@RequestBody User newUser){
+    @PostMapping
+    User addNewUser(@RequestBody User newUser){
         return userService.addNewUser(newUser);
     }
 
     // Update user
-    @PutMapping("/{id}")
-    Optional<User> updateUser(@RequestBody User newUser, @PathVariable Long id){
+    @PutMapping("update/{id}")
+    Optional<User> updateUser(@RequestBody User newUser, @PathVariable("id") Long id){
         return userService.updateUser(newUser, id);
     }
     // Delete user

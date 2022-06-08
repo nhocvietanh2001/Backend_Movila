@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
+@Table(name="userdb")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "uid")
     private Long id;
 
     @Column (name="ufirst_name")
@@ -27,7 +27,9 @@ public class User {
     @Column (name="umail")
     private String mail;
 
-    private Integer aid;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private Account account;
 
     // Relational
     // User - Booking
@@ -37,14 +39,6 @@ public class User {
             fetch = FetchType.EAGER
     )
     Set<Booking> bookingList = new HashSet<>();
-
-    // User - Account
-    @OneToOne
-    @JoinColumn(
-            name = "Account_ID",
-            referencedColumnName = "aid"
-    )
-    private Account account;
 
     // User - Bill
     @JsonIgnore
@@ -56,20 +50,11 @@ public class User {
 
     public User() {}
 
-    public User(String firstName, String lastName, String phone, String mail, Integer aid) {
+    public User(String firstName, String lastName, String phone, String mail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.mail = mail;
-        this.aid = aid;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public Long getId() {
@@ -112,12 +97,24 @@ public class User {
         this.mail = mail;
     }
 
-    public Integer getAid() {
-        return aid;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAid(Integer aid) {
-        this.aid = aid;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", account=" + account +
+                '}';
     }
 
     public Set<Booking> getBookingList() {
@@ -134,19 +131,5 @@ public class User {
 
     public void setBillList(Set<Bill> billList) {
         this.billList = billList;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", mail='" + mail + '\'' +
-                ", aid=" + aid +
-                ", bookingList=" + bookingList +
-                ", account=" + account +
-                '}';
     }
 }

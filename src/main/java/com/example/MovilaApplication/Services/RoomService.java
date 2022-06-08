@@ -1,35 +1,33 @@
 package com.example.MovilaApplication.Services;
 
 import com.example.MovilaApplication.Models.Room;
-import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RoomService {
-
-    private final RoomRepository roomRepository;
-
     @Autowired
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
+    RoomRepository roomRepository;
+
+    // Get
+    public List<Optional<Room>> findRoomByID(long id){
+        Optional<Room> optionalRoom = roomRepository.findById(id);
+        List<Optional<Room>> listRooms = new ArrayList<>();
+        listRooms.add(optionalRoom);
+        return listRooms;
     }
+
     // Post
-    public Room addRoom(Room room){
+    public Room addRoom(Room room) {
         return roomRepository.save(room);
     }
-    // Get
-    public Optional<Room> findRoomByID(long id){
-        Optional<Room> optionalRoom = roomRepository.findById(id);
-        return optionalRoom;
-    }
+
     // Put
     @Transactional
     public Optional<Room> updateRoom(Room newRoom, Long id){
@@ -38,7 +36,7 @@ public class RoomService {
             Optional<Room> updateRoom = roomRepository.findById(id)
                     .map(room -> {
                         room.setName(newRoom.getName());
-                        room.setCid(newRoom.getCid());
+                        room.setCat(newRoom.getCat());
                         room.setPrice(newRoom.getPrice());
                         room.setNumberOfGuest(newRoom.getNumberOfGuest());
                         room.setFloor(newRoom.getFloor());
@@ -67,6 +65,6 @@ public class RoomService {
 
     public List<Room> getAllRooms() {
         List<Room> roomList = roomRepository.findAll();
-        return  roomList;
+        return roomList;
     }
 }
