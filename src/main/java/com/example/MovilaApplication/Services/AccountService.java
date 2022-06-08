@@ -1,6 +1,7 @@
 package com.example.MovilaApplication.Services;
 
 import com.example.MovilaApplication.Models.Account;
+import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.AccountRepository;
@@ -22,6 +23,9 @@ public class AccountService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    HotelService hotelService;
+
     public List<Optional<Account>> Validate(String username, String password) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsernameAndPassword(username, password);
         List<Optional<Account>> accounts = new ArrayList<>();
@@ -39,6 +43,23 @@ public class AccountService {
             newAccount.setUser(newUser);
             newUser.setAccount(newAccount);
             userService.addNewUser(newUser);
+            accountRepository.save(newAccount);
+            List<Account> accounts = new ArrayList<>();
+            accounts.add(newAccount);
+            return accounts;
+        }
+    }
+
+    public List<Account> RegisterHotel(Account newAccount, Hotel newHotel) {
+        Optional<Account> foundAccount = accountRepository.findAccountByUsername(newAccount.getUsername());
+
+        if (foundAccount.isPresent()) {
+            return null;
+        }
+        else {
+            newAccount.setHotelaccount(newHotel);
+            newHotel.setAccount(newAccount);
+            hotelService.addHotel(newHotel);
             accountRepository.save(newAccount);
             List<Account> accounts = new ArrayList<>();
             accounts.add(newAccount);

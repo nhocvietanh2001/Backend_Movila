@@ -19,8 +19,6 @@ public class Hotel {
     @Column(name="hname")
     private String name;
 
-    private Integer aid;
-
     private String address;
 
     private String phone;
@@ -31,12 +29,16 @@ public class Hotel {
     @JsonIgnore
     private List<Room> rooms = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotelaccount")
+    @JsonIgnore
+    private Account account;
+
     public Hotel() {
     }
 
     public Hotel(String name, Integer aid, String address, String phone, String imageURL) {
         this.name = name;
-        this.aid = aid;
+        //this.aid = aid;
         this.address = address;
         this.phone = phone;
         this.imageURL = imageURL;
@@ -58,13 +60,13 @@ public class Hotel {
         this.name = name;
     }
 
-    public Integer getAid() {
+    /*public Integer getAid() {
         return aid;
     }
 
     public void setAid(Integer aid) {
         this.aid = aid;
-    }
+    }*/
 
     public String getAddress() {
         return address;
@@ -98,12 +100,20 @@ public class Hotel {
         this.imageURL = imageURL;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     @Override
     public String toString() {
         return "Hotel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", aid=" + aid +
+                //", aid=" + aid +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", rooms=" + rooms +

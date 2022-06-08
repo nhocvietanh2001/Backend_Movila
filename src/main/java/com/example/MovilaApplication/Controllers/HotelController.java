@@ -19,9 +19,14 @@ public class HotelController {
     @Autowired
     HotelService hotelService;
 
-    @GetMapping()
+    @GetMapping
     List<Hotel> getAllHotel() {
         return hotelService.getAllHotel();
+    }
+
+    @GetMapping("/{hid}")
+    List<Optional<Hotel>> getHotelByID(@PathVariable Long hid) {
+        return hotelService.getHotelByID(hid);
     }
 
     @GetMapping("/getRooms/{hid}")

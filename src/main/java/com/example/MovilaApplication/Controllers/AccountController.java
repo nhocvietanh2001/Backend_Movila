@@ -41,11 +41,18 @@ public class AccountController {
         return accountService.Validate(a.getUsername(), a.getPassword());
     }
 
-    @PostMapping("/register")
-    List<Account> Register(@RequestBody Pair pair) {
+    @PostMapping("/register/user")
+    List<Account> RegisterUser(@RequestBody PairUser pair) {
         Account account = pair.getAccount();
         User user = pair.getUser();
         return accountService.Register(account, user);
+    }
+
+    @PostMapping("/register/hotel")
+    List<Account> RegisterHotel(@RequestBody PairHotel pair) {
+        Account account = pair.getAccount();
+        Hotel hotel = pair.getHotel();
+        return accountService.RegisterHotel(account, hotel);
     }
 
     @PutMapping("/update/{id}")
@@ -54,7 +61,7 @@ public class AccountController {
     }
 
     @PutMapping("/{aid}/users/{uid}")
-    public Account assignToHotel(@PathVariable Long aid, @PathVariable Long uid) {
+    public Account assignToUser(@PathVariable Long aid, @PathVariable Long uid) {
         Account account = accountRepository.findById(aid).get();
         User user = userRepository.findById(uid).get();
         account.setUser(user);

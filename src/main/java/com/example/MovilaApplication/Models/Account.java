@@ -19,6 +19,10 @@ public class Account {
     @JoinColumn(name="uid")
     private User user;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="hid")
+    private Hotel hotelaccount;
+
     public Account() {
     }
 
@@ -66,6 +70,14 @@ public class Account {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Hotel getHotelaccount() {
+        return hotelaccount;
+    }
+
+    public void setHotelaccount(Hotel hotelaccount) {
+        this.hotelaccount = hotelaccount;
     }
 
     @Override

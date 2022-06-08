@@ -1,6 +1,6 @@
 package com.example.MovilaApplication.Models;
 
-public class Pair {
+public class PairUser {
     private Account account;
     private User user;
 
@@ -20,3 +20,4 @@ public class Pair {
         this.user = user;
     }
 }
+

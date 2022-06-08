@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class HotelService {
             Optional<Hotel> updateHotel = hotelRepository.findById(id)
                     .map(hotel -> {
                         hotel.setName(newHotel.getName());
-                        hotel.setAid(hotel.getAid());
+                        //hotel.setAid(hotel.getAid());
                         hotel.setAddress(hotel.getAddress());
                         hotel.setPhone(hotel.getPhone());
                         hotel.setImageURL(hotel.getImageURL());
@@ -56,5 +57,12 @@ public class HotelService {
             hotelRepository.deleteById(id);
             return true;
         }
+    }
+
+    public List<Optional<Hotel>> getHotelByID(Long hid) {
+        Optional<Hotel> optionalHotel = hotelRepository.findById(hid);
+        List<Optional<Hotel>> listHotels = new ArrayList<>();
+        listHotels.add(optionalHotel);
+        return listHotels;
     }
 }
