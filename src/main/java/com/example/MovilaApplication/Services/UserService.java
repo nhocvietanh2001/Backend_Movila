@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Services;
 
+import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.UserRepository;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +25,18 @@ public class UserService {
         return allUser;
     }
 
-    public Optional<User> findUserById(Long id){
+    public List<Optional<User>> findUserById(Long id){
         Optional<User> foundUser = userRepository.findById(id);
-        return foundUser;
+        List<Optional<User>> users = new ArrayList<>();
+        users.add(foundUser);
+        return users;
+    }
+
+    public List<Account> findAccountOfUserById(Long id){
+        User foundUser = userRepository.findById(id).get();
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(foundUser.getAccount());
+        return accounts;
     }
 
     public User addNewUser(User newUser){

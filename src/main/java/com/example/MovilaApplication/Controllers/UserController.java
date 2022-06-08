@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Controllers;
 
+import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Services.UserService;
@@ -23,8 +24,13 @@ public class UserController {
     }
     // Get user by ID
     @GetMapping("/{id}")
-    Optional<User> findUserById(@PathVariable Long id){
+    List<Optional<User>> findUserById(@PathVariable Long id){
         return userService.findUserById(id);
+    }
+
+    @GetMapping("/{id}/getaccount")
+    List<Account> findAccountById(@PathVariable Long id){
+        return userService.findAccountOfUserById(id);
     }
 
     // Add new user
