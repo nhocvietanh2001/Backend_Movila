@@ -35,7 +35,7 @@ public class Database {
 
                 Account accountHotelA = new Account("hotel", "123123", "hotel");
 
-                Hotel hotelA = new Hotel("First hotel", 1, "Di An Binh Duong", "052335184", "https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/5.jpg?alt=media&token=dd1b7124-5ad6-4860-8978-2a6e7c147cb6");
+                Hotel hotelA = new Hotel("First hotel", "Hotel@gmial.com", "Di An Binh Duong", "052335184", "https://firebasestorage.googleapis.com/v0/b/algebraic-fin-332903.appspot.com/o/5.jpg?alt=media&token=dd1b7124-5ad6-4860-8978-2a6e7c147cb6");
                 System.out.println("end for 2");
                 accountHotelA.setHotelaccount(hotelA);
                 hotelA.setAccount(accountHotelA);
