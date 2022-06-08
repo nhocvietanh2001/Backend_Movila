@@ -1,6 +1,7 @@
 package com.example.MovilaApplication.Services;
 
 import com.example.MovilaApplication.Models.Bill;
+import com.example.MovilaApplication.Models.Booking;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.UserRepository;
@@ -72,5 +73,9 @@ public class UserService {
        catch (Exception e){
             return null;
        }
+    }
+
+    public Set<Booking> GetUserBookings(Long uid) {
+        return userRepository.findById(uid).get().getBookingList();
     }
 }
