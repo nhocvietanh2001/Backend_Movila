@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Controllers;
 
+import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
 import com.example.MovilaApplication.Repositories.HotelRepository;
@@ -32,6 +33,11 @@ public class HotelController {
     @GetMapping("/getRooms/{hid}")
     List<Room> getAllRoomFromHotel(@PathVariable long hid) {
         return hotelRepository.getRoomsById(hid);
+    }
+
+    @GetMapping("/{id}/getaccount")
+    List<Account> findAccountById(@PathVariable Long id){
+        return hotelService.findAccountOfHotelById(id);
     }
 
     @PostMapping
