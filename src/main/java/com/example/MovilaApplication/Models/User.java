@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,14 +40,6 @@ public class User {
     )
     Set<Booking> bookingList = new HashSet<>();
 
-    // User - Account
-    @OneToOne
-    @JoinColumn(
-            name = "Account_ID",
-            referencedColumnName = "aid"
-    )
-    private Account account;
-
     // User - Bill
     @JsonIgnore
     @OneToMany(mappedBy = "user_billing", fetch = FetchType.EAGER)
@@ -64,14 +55,6 @@ public class User {
         this.lastName = lastName;
         this.phone = phone;
         this.mail = mail;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public Long getId() {
@@ -148,19 +131,5 @@ public class User {
 
     public void setBillList(Set<Bill> billList) {
         this.billList = billList;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", mail='" + mail + '\'' +
-                ", aid=" + aid +
-                ", bookingList=" + bookingList +
-                ", account=" + account +
-                '}';
     }
 }

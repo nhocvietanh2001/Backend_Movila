@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name="bill")
 public class Bill {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Long uid;
     private Integer rid;
@@ -28,7 +28,7 @@ public class Bill {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "user_billing",
-            referencedColumnName = "id"
+            referencedColumnName = "uid"
     )
     private User user_billing;
 

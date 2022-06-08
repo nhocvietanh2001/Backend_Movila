@@ -20,7 +20,7 @@ public class Booking {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "User_ID",
-            referencedColumnName = "id" // id of the user
+            referencedColumnName = "uid" // id of the user
     )
     private User user_booking;
 
