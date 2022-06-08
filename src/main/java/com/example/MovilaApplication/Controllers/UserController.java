@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Controllers;
 
+import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Services.UserService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -27,6 +29,11 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+    // Get User Bill List
+    @GetMapping(path = "/GetUserBills/{uid}")
+    Set<Bill> GetUserBills(@PathVariable Long uid){
+        return userService.GetUserBills(uid);
+    }
     // Add new user
     @PostMapping("/new-user")
     Boolean addNewUser(@RequestBody User newUser){

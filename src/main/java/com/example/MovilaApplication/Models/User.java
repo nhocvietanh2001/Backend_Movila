@@ -4,7 +4,9 @@ package com.example.MovilaApplication.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -29,9 +31,11 @@ public class User {
 
     // Relational
     // User - Booking
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    List<Booking> bookingList;
+    @OneToMany(
+            mappedBy = "user_booking",
+            fetch = FetchType.EAGER
+    )
+    Set<Booking> bookingList = new HashSet<>();
 
     // User - Account
     @OneToOne
@@ -40,6 +44,11 @@ public class User {
             referencedColumnName = "aid"
     )
     private Account account;
+
+    // User - Bill
+    @JsonIgnore
+    @OneToMany(mappedBy = "user_billing", fetch = FetchType.EAGER)
+    Set<Bill> billList = new HashSet<>();
 
     //Relational
 
@@ -52,14 +61,6 @@ public class User {
         this.phone = phone;
         this.mail = mail;
         this.aid = aid;
-    }
-
-    public List<Booking> getBookingList() {
-        return bookingList;
-    }
-
-    public void setBookingList(List<Booking> bookingList) {
-        this.bookingList = bookingList;
     }
 
     public Account getAccount() {
@@ -118,6 +119,22 @@ public class User {
         this.aid = aid;
     }
 
+    public Set<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(Set<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    public Set<Bill> getBillList() {
+        return billList;
+    }
+
+    public void setBillList(Set<Bill> billList) {
+        this.billList = billList;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -127,6 +144,8 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", mail='" + mail + '\'' +
                 ", aid=" + aid +
+                ", bookingList=" + bookingList +
+                ", account=" + account +
                 '}';
     }
 }

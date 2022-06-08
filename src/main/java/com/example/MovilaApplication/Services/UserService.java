@@ -1,5 +1,6 @@
 package com.example.MovilaApplication.Services;
 
+import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -60,5 +62,15 @@ public class UserService {
         } else {
             return false;
         }
+    }
+
+    public Set<Bill> GetUserBills(Long uid) {
+        try{
+            User user = userRepository.findById(uid).get();
+            return user.getBillList();
+        }
+       catch (Exception e){
+            return null;
+       }
     }
 }
