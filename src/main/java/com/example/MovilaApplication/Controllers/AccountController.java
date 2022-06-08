@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -41,13 +42,15 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    ResponseEntity<ResponseObject> Register(@RequestBody Account account) {
-        return accountService.Register(account);
+    List<Account> Register(@RequestBody Pair pair) {
+        Account account = pair.getAccount();
+        User user = pair.getUser();
+        return accountService.Register(account, user);
     }
 
-    @PutMapping("/update")
-    ResponseEntity<ResponseObject> Update(@RequestBody Account account) {
-        return accountService.Update(account);
+    @PutMapping("/update/{id}")
+    Optional<Account> Update(@RequestBody Account account, @PathVariable Long id) {
+        return accountService.Update(account, id);
     }
 
     @PutMapping("/{aid}/users/{uid}")

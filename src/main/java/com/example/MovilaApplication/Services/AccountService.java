@@ -2,7 +2,9 @@ package com.example.MovilaApplication.Services;
 
 import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.ResponseObject;
+import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.AccountRepository;
+import com.example.MovilaApplication.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +16,11 @@ import java.util.Optional;
 
 @Service
 public class AccountService {
-    private final AccountRepository accountRepository;
+    @Autowired
+    AccountRepository accountRepository;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
+    UserService userService;
 
     public List<Optional<Account>> Validate(String username, String password) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsernameAndPassword(username, password);
@@ -28,36 +29,37 @@ public class AccountService {
         return accounts;
     }
 
-    public ResponseEntity<ResponseObject> Register(Account newAccount) {
+    public List<Account> Register(Account newAccount, User newUser) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsername(newAccount.getUsername());
+
         if (foundAccount.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("409", "Username already exists", "")
-            );
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("200", "Registered", accountRepository.save(newAccount))
-            );
+            return null;
+        }
+        else {
+            newAccount.setUser(newUser);
+            newUser.setAccount(newAccount);
+            userService.addNewUser(newUser);
+            accountRepository.save(newAccount);
+            List<Account> accounts = new ArrayList<>();
+            accounts.add(newAccount);
+            return accounts;
         }
     }
 
     //Note: Update by username. Only update password, userID and role. Unable to update username.
-    public ResponseEntity<ResponseObject> Update(Account account) {
-        Optional<Account> foundAccount = accountRepository.findAccountByUsername(account.getUsername());
-        if (foundAccount.isPresent()) {
+    public Optional<Account> Update(Account account, Long id) {
+
+        Boolean exists = accountRepository.existsById(id);
+        if (exists) {
+            Optional<Account> foundAccount = accountRepository.findById(id);
             foundAccount.map(updateAccount -> {
-                        updateAccount.setPassword(account.getPassword());
-                        updateAccount.setRole(account.getRole());
-                        return accountRepository.save(updateAccount);
-                    });
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Update user successfully", foundAccount)
-            );
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Username not found", "")
-            );
+                updateAccount.setPassword(account.getPassword());
+
+                return accountRepository.save(updateAccount);
+            });
+            return foundAccount;
         }
+        return null;
     }
 
     //Note: Delete by username, and have to validate the account before deleting.
