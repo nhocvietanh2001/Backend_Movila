@@ -41,7 +41,7 @@ public class UserController {
 
     // Update user
     @PutMapping("update/{id}")
-    Optional<User> updateUser(@RequestBody User newUser, @PathVariable Long id){
+    Optional<User> updateUser(@RequestBody User newUser, @PathVariable("id") Long id){
         return userService.updateUser(newUser, id);
     }
     // Delete user

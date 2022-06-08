@@ -49,20 +49,20 @@ public class UserService {
     }
 
     public Optional<User> updateUser(User newUser, Long id){
-        Optional<User> UserByMail = userRepository.findByMail(newUser.getMail());
-        if (UserByMail.isPresent()) {
-            return null;
-        } else {
+        Boolean exists = userRepository.existsById(id);
+        if (exists) {
             Optional<User> updateUser = userRepository.findById(id)
                     .map(user -> {
                         user.setFirstName(newUser.getFirstName());
                         user.setLastName(newUser.getLastName());
                         user.setPhone(newUser.getPhone());
                         user.setMail(newUser.getMail());
+
                         return userRepository.save(user);
                     });
             return updateUser;
         }
+        return null;
     }
 
     public Boolean deleteUser(Long id){
