@@ -31,6 +31,7 @@ public class User {
 
     // Relational
     // User - Booking
+    @JsonIgnore
     @OneToMany(
             mappedBy = "user_booking",
             fetch = FetchType.EAGER

@@ -1,6 +1,7 @@
 package com.example.MovilaApplication.Controllers;
 
 import com.example.MovilaApplication.Models.Bill;
+import com.example.MovilaApplication.Models.Booking;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Services.UserService;
@@ -51,5 +52,9 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
-
+    // Get List Booking of a User
+    @GetMapping(path = "/GetUserBookings/{uid}")
+    Set<Booking> GetUserBookings(@PathVariable Long uid){
+        return userService.GetUserBookings(uid);
+    }
 }

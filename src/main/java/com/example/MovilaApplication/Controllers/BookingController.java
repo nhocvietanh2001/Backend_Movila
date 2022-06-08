@@ -15,18 +15,13 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
-    @GetMapping(path = "/GetUserBookings/{uid}")
-    List<Booking> GetUserBookings(@PathVariable Integer uid){
-        return bookingService.GetUserBookings(uid);
-    }
-
     @PostMapping("/InsertBooking")
     Boolean InsertBooking(@RequestBody Booking booking){
         return bookingService.InsertBooking(booking);
     }
 
     @DeleteMapping("/DeleteBooking/{bid}")
-    Boolean DeleteBooking(@PathVariable Integer bid){
+    Integer DeleteBooking(@PathVariable Integer bid){
         return bookingService.DeleteBooking(bid);
     }
 

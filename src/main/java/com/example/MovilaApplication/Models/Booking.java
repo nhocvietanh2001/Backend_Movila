@@ -10,18 +10,11 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private Long uid;
     private Integer rid;
 
     // Relational
-
-//    // Book-Bill
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(
-//            name = "Bill_ID",
-//            referencedColumnName = "id"
-//    )
-//    private Bill booked_bill;
 
     // Book-User
     @ManyToOne(cascade = CascadeType.ALL)
