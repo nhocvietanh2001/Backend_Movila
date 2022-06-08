@@ -7,7 +7,9 @@ import com.example.MovilaApplication.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BillService {
@@ -17,10 +19,12 @@ public class BillService {
     @Autowired
     UserRepository userRepository;
     // Get a bill by its ID
-    public Bill GetBillByBillID(Integer bid){
+    public Set<Bill> GetBillByBillID(Integer bid){
         try{
+            Set<Bill> billSet = new HashSet<>();
             Bill bill = billRepository.findById(bid).get();
-            return bill;
+            billSet.add(bill);
+            return billSet;
         }
         catch(Exception e){
             return null;
@@ -38,12 +42,14 @@ public class BillService {
 //    }
 
     // Insert a bill entity
-    public Bill InsertBill(Bill bill, Long uid){
+    public Set<Bill> InsertBill(Bill bill, Long uid){
         try {
+            Set<Bill> billSet = new HashSet<>();
             User user = userRepository.findById(uid).get();
             bill.setUser_billing(user);
             billRepository.save(bill);
-            return bill;
+            billSet.add(bill);
+            return billSet;
         }
         catch (Exception e){
             return null;

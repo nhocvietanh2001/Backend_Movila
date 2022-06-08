@@ -11,7 +11,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BookingService {
@@ -25,18 +27,20 @@ public class BookingService {
 
 
 
-    public Boolean InsertBooking(Booking booking) {
+    public Set<Booking> InsertBooking(Booking booking) {
         try
         {
+            Set<Booking> bookingSet = new HashSet<>();
             User user = userRepository.findById(Long.valueOf(booking.getUid())).get();
             Room room = roomRepository.findById(Long.valueOf(booking.getRid())).get();
             booking.setUser_booking(user);
             booking.setBooked_room(room);
             bookingRepository.save(booking);
-            return true;
+            bookingSet.add(booking);
+            return bookingSet;
         }
         catch (Exception e){
-            return false;
+            return new HashSet<>();
         }
     }
     @Transactional
@@ -50,22 +54,26 @@ public class BookingService {
         }
     }
     // Update the room id and the user id
-    public Boolean UpdateBooking(Booking booking) {
-        if(booking == null){
-            return false;
-        }
-        else{
+    public Set<Booking> UpdateBooking(Booking booking, Long uid) {
             try{
+                Booking updatingBooking = bookingRepository.findByUserID(uid);
+
+                Set<Booking> bookingSet = new HashSet<>();
                 User user = userRepository.findById(Long.valueOf(booking.getUid())).get();
                 Room room = roomRepository.findById(Long.valueOf(booking.getRid())).get();
+
+                booking.setId(updatingBooking.getId());
                 booking.setUser_booking(user);
                 booking.setBooked_room(room);
+
                 bookingRepository.save(booking);
-                return true;
+
+                bookingSet.add(booking);
+                return bookingSet;
             }
             catch (Exception e){
-                return false;
+                return new HashSet<>();
             }
-        }
     }
 }
+

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/bills")
@@ -19,7 +20,7 @@ public class BillController {
     BillService billService;
 
     @GetMapping(path = "/GetBill/{bid}")
-    Bill GetBillByBillID(@PathVariable Integer bid){
+    Set<Bill> GetBillByBillID(@PathVariable Integer bid){
         return billService.GetBillByBillID(bid);
     }
 
@@ -29,7 +30,7 @@ public class BillController {
 //    }
 
     @PostMapping("/InsertBill/users/{uid}")
-    Bill InsertBill(@RequestBody Bill bill, @PathVariable Long uid){
+    Set<Bill> InsertBill(@RequestBody Bill bill, @PathVariable Long uid){
         return billService.InsertBill(bill, uid);
     }
 
