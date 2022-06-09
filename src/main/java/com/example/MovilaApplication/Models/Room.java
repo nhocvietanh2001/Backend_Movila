@@ -32,7 +32,7 @@ public class Room {
 
     private String imageURL;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "hid", referencedColumnName = "hid")
     private Hotel hotel;
 

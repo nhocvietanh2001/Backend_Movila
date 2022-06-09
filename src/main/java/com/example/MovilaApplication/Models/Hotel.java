@@ -27,7 +27,7 @@ public class Hotel {
 
     private String imageURL;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Room> rooms = new ArrayList<>();
 
