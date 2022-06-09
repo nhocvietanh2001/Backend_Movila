@@ -87,5 +87,15 @@ public class BookingService {
         result.removeAll(rooms);
         return result;
     }
+
+    public List<Booking> getBookingByHotel(Long hid) {
+        List<Booking> bookings = bookingRepository.findBookingByHotel(hid);
+        return bookings;
+    }
+
+    public List<Booking> getBookingByUser(Long uid) {
+        List<Booking> bookings = bookingRepository.findBookingByUser(uid);
+        return bookings;
+    }
 }
 

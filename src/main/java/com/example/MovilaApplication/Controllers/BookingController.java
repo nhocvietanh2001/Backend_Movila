@@ -27,6 +27,16 @@ public class BookingController {
         return bookingService.getRoomUnavailable(hid);
     }
 
+    @GetMapping("/hotels/{hid}")
+    List<Booking> GetBookingByHotel(@PathVariable Long hid) {
+        return bookingService.getBookingByHotel(hid);
+    }
+
+    @GetMapping("/users/{uid}")
+    List<Booking> GetBookingByUser(@PathVariable Long uid) {
+        return bookingService.getBookingByUser(uid);
+    }
+
     @PostMapping("rooms/{rid}/users/{uid}")
     Set<Booking> InsertBooking(@RequestBody Booking booking, @PathVariable Long rid, @PathVariable Long uid){
         return bookingService.InsertBooking(booking, rid, uid);
