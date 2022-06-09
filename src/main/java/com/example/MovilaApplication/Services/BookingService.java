@@ -64,7 +64,7 @@ public class BookingService {
 
     public List<Room> getRoomAvailable(Long hid) {
         List<Room> rooms = hotelRepository.getRoomsById(hid);
-        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookings = bookingRepository.findBookingByHotel(hid);
         List<Room> unavailableRooms = new ArrayList<>();
         for (Booking booking : bookings) {
             unavailableRooms.add(booking.getBooked_room());
@@ -77,7 +77,7 @@ public class BookingService {
         List<Room> rooms = hotelRepository.getRoomsById(hid);
         List<Room> result = hotelRepository.getRoomsById(hid);
 
-        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookings = bookingRepository.findBookingByHotel(hid);
         List<Room> unavailableRooms = new ArrayList<>();
         for (Booking booking : bookings) {
             if (booking.getBooked_room()!=null)
@@ -96,6 +96,17 @@ public class BookingService {
     public List<Booking> getBookingByUser(Long uid) {
         List<Booking> bookings = bookingRepository.findBookingByUser(uid);
         return bookings;
+    }
+
+    public List<Room> getAllRoomAvailable() {
+        List<Room> rooms = roomRepository.findAll();
+        List<Booking> bookings = bookingRepository.findAll();
+        List<Room> unavailableRooms = new ArrayList<>();
+        for (Booking booking : bookings) {
+            unavailableRooms.add(booking.getBooked_room());
+        }
+        rooms.removeAll(unavailableRooms);
+        return rooms;
     }
 }
 

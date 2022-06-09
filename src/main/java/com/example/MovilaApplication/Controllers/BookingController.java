@@ -17,6 +17,11 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
+    @GetMapping("/notbooked")
+    List<Room> GetRoomAvailable() {
+        return bookingService.getAllRoomAvailable();
+    }
+
     @GetMapping("/notbooked/{hid}")
     List<Room> GetRoomAvailable(@PathVariable Long hid) {
         return bookingService.getRoomAvailable(hid);
