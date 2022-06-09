@@ -19,7 +19,7 @@ public class BillService {
     @Autowired
     UserRepository userRepository;
     // Get a bill by its ID
-    public Set<Bill> GetBillByBillID(Integer bid){
+    public Set<Bill> GetBillByBillID(Long bid){
         try{
             Set<Bill> billSet = new HashSet<>();
             Bill bill = billRepository.findById(bid).get();
@@ -57,7 +57,7 @@ public class BillService {
     }
 
     // Delete a bill by its bill id
-    public Boolean DeleteBill(Integer bid) {
+    public Boolean DeleteBill(Long bid) {
         try{
             billRepository.deleteById(bid);
             return true;

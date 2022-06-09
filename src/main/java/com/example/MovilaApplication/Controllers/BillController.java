@@ -20,7 +20,7 @@ public class BillController {
     BillService billService;
 
     @GetMapping(path = "/GetBill/{bid}")
-    Set<Bill> GetBillByBillID(@PathVariable Integer bid){
+    Set<Bill> GetBillByBillID(@PathVariable Long bid){
         return billService.GetBillByBillID(bid);
     }
 
@@ -35,9 +35,8 @@ public class BillController {
     }
 
     @DeleteMapping("/DeleteBill/{bid}")
-    Boolean DeleteBill(@PathVariable Integer bid){
+    Boolean DeleteBill(@PathVariable Long bid){
         return billService.DeleteBill(bid);
     }
-
 
 }

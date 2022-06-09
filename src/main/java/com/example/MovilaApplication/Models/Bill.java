@@ -6,39 +6,36 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="bill")
+@Table(name="billdb")
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private Long uid;
-    private Integer rid;
-    private Integer hid;
+    @Column(name = "billid")
+    private Long id;
     private Date checkinDate;
     private Date checkoutDate;
     private Integer price;
 
-
 //    // Relational
 //    // Bill - Booking
 //    @OneToOne(mappedBy = "booked_bill")
-//    private Booking billed_booking;
+//    private Booking booking;
 
     // Bill - User
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
-            name = "user_billing",
+            name = "uid",
             referencedColumnName = "uid"
     )
     private User user_billing;
 
-//    // Bill - Room
-//    @OneToOne
-//    @JoinColumn(
-//            name = "Bill-Room",
-//            referencedColumnName = "rid"
-//    )
-//    private Room room;
+    // Bill - Room
+    @OneToOne
+    @JoinColumn(
+            name = "rid",
+            referencedColumnName = "rid"
+    )
+    private Room room_billing;
 
     // Relational
 
@@ -46,50 +43,26 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(Integer id, Long uid, Integer rid, Integer hid, Date checkinDate, Date checkoutDate, Integer price) {
-        this.id = id;
-        this.uid = uid;
-        this.rid = rid;
-        this.hid = hid;
+    public Bill(Date checkinDate, Date checkoutDate, Integer price) {
         this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
         this.price = price;
     }
 
-    public Bill(Integer price) {
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
         this.price = price;
     }
-//    public Booking getBilled_booking() {
-//        return billed_booking;
-//    }
-//
-//    public void setBilled_booking(Booking billed_booking) {
-//        this.billed_booking = billed_booking;
-//    }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-
-    public Integer getRid() {
-        return rid;
-    }
-
-    public void setRid(Integer rid) {
-        this.rid = rid;
-    }
-
-    public Integer getHid() {
-        return hid;
-    }
-
-    public void setHid(Integer hid) {
-        this.hid = hid;
     }
 
     public Date getCheckinDate() {
@@ -108,14 +81,6 @@ public class Bill {
         this.checkoutDate = checkoutDate;
     }
 
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
     public User getUser_billing() {
         return user_billing;
     }
@@ -124,13 +89,6 @@ public class Bill {
         this.user_billing = user;
     }
 
-    public Long getUid() {
-        return uid;
-    }
-
-    public void setUid(Long uid) {
-        this.uid = uid;
-    }
     //
 //    public Room getRoom() {
 //        return room;
@@ -140,14 +98,10 @@ public class Bill {
 //        this.room = room;
 //    }
 
-
     @Override
     public String toString() {
         return "Bill{" +
                 "id=" + id +
-                ", uid=" + uid +
-                ", rid=" + rid +
-                ", hid=" + hid +
                 ", checkinDate=" + checkinDate +
                 ", checkoutDate=" + checkoutDate +
                 ", price=" + price +

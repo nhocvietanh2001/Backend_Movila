@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BillRepository extends JpaRepository<Bill, Integer> {
+public interface BillRepository extends JpaRepository<Bill, Long> {
 
 }
