@@ -1,7 +1,9 @@
 package com.example.MovilaApplication.Controllers;
 
+
 import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.Booking;
+import com.example.MovilaApplication.Models.Room;
 import com.example.MovilaApplication.Services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +18,43 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
-    @PostMapping("/InsertBooking")
-    Set<Booking> InsertBooking(@RequestBody Booking booking){
-        return bookingService.InsertBooking(booking);
+    @GetMapping("/notbooked")
+    List<Room> GetRoomAvailable() {
+        return bookingService.getAllRoomAvailable();
     }
 
-    @DeleteMapping("/DeleteBooking/bills/{bid}")
-    Integer DeleteBooking(@PathVariable Integer bid){
-        return bookingService.DeleteBooking(bid);
+    @GetMapping("/notbooked/{hid}")
+    List<Room> GetRoomAvailable(@PathVariable Long hid) {
+        return bookingService.getRoomAvailable(hid);
     }
 
-    @PutMapping("/UpdateBooking/users/{uid}")
-    Set<Booking> UpdateBooking(@RequestBody Booking booking, @PathVariable Long uid){
-        return bookingService.UpdateBooking(booking, uid);
+    @GetMapping("/booked/{hid}")
+    List<Room> GetRoomUnavailable(@PathVariable Long hid) {
+        return bookingService.getRoomUnavailable(hid);
+    }
+
+    @GetMapping("/hotels/{hid}")
+    List<Booking> GetBookingByHotel(@PathVariable Long hid) {
+        return bookingService.getBookingByHotel(hid);
+    }
+
+    @GetMapping("/users/{uid}")
+    List<Booking> GetBookingByUser(@PathVariable Long uid) {
+        return bookingService.getBookingByUser(uid);
+    }
+
+    @PostMapping("rooms/{rid}/users/{uid}")
+    Set<Booking> InsertBooking(@RequestBody Booking booking, @PathVariable Long rid, @PathVariable Long uid){
+        return bookingService.InsertBooking(booking, rid, uid);
+    }
+
+    @DeleteMapping("/validate/{bookingid}")
+    List<Bill> DeleteBookingAndInsertBill(@PathVariable Long bookingid){
+        return bookingService.DeleteBookingAndInsertBill(bookingid);
+    }
+
+    @DeleteMapping("/cancel/{bookingid}")
+    Boolean CancelBooking(@PathVariable Long bookingid){
+        return bookingService.CancelBooking(bookingid);
     }
 }

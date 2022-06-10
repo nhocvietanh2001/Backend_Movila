@@ -1,6 +1,8 @@
 package com.example.MovilaApplication.Services;
 
+import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
+import com.example.MovilaApplication.Repositories.HotelRepository;
 import com.example.MovilaApplication.Repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class RoomService {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    HotelRepository hotelRepository;
     // Get
     public List<Optional<Room>> findRoomByID(long id){
         Optional<Room> optionalRoom = roomRepository.findById(id);
@@ -66,5 +70,11 @@ public class RoomService {
     public List<Room> getAllRooms() {
         List<Room> roomList = roomRepository.findAll();
         return roomList;
+    }
+
+    public Room addRoomAtHotel(Room room, Long hid) {
+        Hotel hotel = hotelRepository.findById(hid).get();
+        room.setHotel(hotel);
+        return roomRepository.save(room);
     }
 }

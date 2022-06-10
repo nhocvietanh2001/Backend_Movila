@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BillRepository extends JpaRepository<Bill, Integer> {
-
+public interface BillRepository extends JpaRepository<Bill, Long> {
+    @Query("SELECT b From Bill b Where b.user_billing.id = ?1")
+    List<Bill> findBillByUid(Long uid);
 }

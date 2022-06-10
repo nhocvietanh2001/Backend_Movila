@@ -19,13 +19,15 @@ public class Hotel {
     @Column(name="hname")
     private String name;
 
+    private String email;
+
     private String address;
 
     private String phone;
 
     private String imageURL;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Room> rooms = new ArrayList<>();
 
@@ -36,9 +38,9 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(String name, Integer aid, String address, String phone, String imageURL) {
+    public Hotel(String name, String email, String address, String phone, String imageURL) {
         this.name = name;
-        //this.aid = aid;
+        this.email = email;
         this.address = address;
         this.phone = phone;
         this.imageURL = imageURL;
@@ -60,13 +62,13 @@ public class Hotel {
         this.name = name;
     }
 
-    /*public Integer getAid() {
-        return aid;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAid(Integer aid) {
-        this.aid = aid;
-    }*/
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getAddress() {
         return address;
@@ -113,10 +115,11 @@ public class Hotel {
         return "Hotel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                //", aid=" + aid +
+                ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", rooms=" + rooms +
+                ", imageURL='" + imageURL + '\'' +
+                ", account=" + account +
                 '}';
     }
 }

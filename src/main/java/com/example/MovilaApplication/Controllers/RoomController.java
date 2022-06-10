@@ -33,6 +33,10 @@ public class RoomController {
     public Room addRoom(@RequestBody Room room){
         return roomService.addRoom(room);
     }
+    @PostMapping("/{hid}")
+    public Room addRoom(@RequestBody Room room, @PathVariable Long hid){
+        return roomService.addRoomAtHotel(room, hid);
+    }
     @PutMapping(path="{id}")
     public Optional<Room> updateRoom(@PathVariable("id") Long id, @RequestBody Room newRoom){
         return roomService.updateRoom(newRoom, id);

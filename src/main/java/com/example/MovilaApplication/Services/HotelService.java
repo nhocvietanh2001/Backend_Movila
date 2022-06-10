@@ -1,7 +1,9 @@
 package com.example.MovilaApplication.Services;
 
+import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
+import com.example.MovilaApplication.Models.User;
 import com.example.MovilaApplication.Repositories.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,10 +38,10 @@ public class HotelService {
             Optional<Hotel> updateHotel = hotelRepository.findById(id)
                     .map(hotel -> {
                         hotel.setName(newHotel.getName());
-                        //hotel.setAid(hotel.getAid());
-                        hotel.setAddress(hotel.getAddress());
-                        hotel.setPhone(hotel.getPhone());
-                        hotel.setImageURL(hotel.getImageURL());
+                        hotel.setEmail(newHotel.getEmail());
+                        hotel.setAddress(newHotel.getAddress());
+                        hotel.setPhone(newHotel.getPhone());
+                        hotel.setImageURL(newHotel.getImageURL());
 
                         return hotelRepository.save(hotel);
                     });
@@ -64,5 +66,12 @@ public class HotelService {
         List<Optional<Hotel>> listHotels = new ArrayList<>();
         listHotels.add(optionalHotel);
         return listHotels;
+    }
+
+    public List<Account> findAccountOfHotelById(Long id) {
+        Hotel foundHotel = hotelRepository.findById(id).get();
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(foundHotel.getAccount());
+        return accounts;
     }
 }
