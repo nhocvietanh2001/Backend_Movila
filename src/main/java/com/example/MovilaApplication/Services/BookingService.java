@@ -120,14 +120,13 @@ public class BookingService {
     }
 
     public Boolean CancelBooking(Long bookingid) {
-        try {
-            Optional<Booking> booking = bookingRepository.findById(bookingid);
-            bookingRepository.deleteById(bookingid);
-
-            return true;
-        }
-        catch(Exception e) {
+        boolean exists = bookingRepository.existsById(bookingid);
+        if(!exists){
             return false;
+        }
+        else{
+            bookingRepository.deleteById(bookingid);
+            return true;
         }
     }
 }
