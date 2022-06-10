@@ -15,6 +15,7 @@ public class Bill {
     private Long id;
     private LocalDate checkinDate;
     private LocalDate checkoutDate;
+    private Integer price;
 
 //    // Relational
 //    // Bill - Booking
@@ -43,9 +44,10 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(LocalDate checkinDate, LocalDate checkoutDate, User user_billing, Room room_billing) {
+    public Bill(LocalDate checkinDate, LocalDate checkoutDate, Integer price, User user_billing, Room room_billing) {
         this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
+        this.price = price;
         this.user_billing = user_billing;
         this.room_billing = room_billing;
     }
@@ -80,6 +82,22 @@ public class Bill {
 
     public void setUser_billing(User user) {
         this.user_billing = user;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Room getRoom_billing() {
+        return room_billing;
+    }
+
+    public void setRoom_billing(Room room_billing) {
+        this.room_billing = room_billing;
     }
 
     @Override

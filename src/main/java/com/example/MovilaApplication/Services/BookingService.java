@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -57,8 +58,11 @@ public class BookingService {
         try {
             Optional<Booking> booking = bookingRepository.findById(bookingid);
 
+            LocalDate checkinDate = booking.get().getCheckinDate();
             LocalDate checkoutDate = LocalDate.now();
-            Bill bill = new Bill(booking.get().getCheckinDate(), checkoutDate, booking.get().getUser_booking(), booking.get().getBooked_room());
+            Integer day = Math.toIntExact(ChronoUnit.DAYS.between(checkinDate, checkoutDate)) + 1;
+            Integer price = booking.get().getBooked_room().getPrice() * day / 10;
+            Bill bill = new Bill(booking.get().getCheckinDate(), checkoutDate, price, booking.get().getUser_booking(), booking.get().getBooked_room());
 
             billRepository.save(bill);
             bookingRepository.deleteById(bookingid);
