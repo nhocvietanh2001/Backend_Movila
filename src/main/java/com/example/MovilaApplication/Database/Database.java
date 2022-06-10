@@ -16,7 +16,7 @@ import java.util.Date;
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
     @Bean
-    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository, AccountRepository accountRepository, BillRepository billRepository, BookingRepository bookingRepository){
+    CommandLineRunner initDatabase (UserRepository userRepository, HotelRepository hotelRepository, RoomRepository roomRepository, AccountRepository accountRepository, BillRepository billRepository, BookingRepository bookingRepository, ContactRepository contactRepository){
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
@@ -71,6 +71,8 @@ public class Database {
 //                hotelB.setAccount(accountHotelB);
 //
 //                logger.info("insert data:" + accountRepository.save(accountHotelB));
+//                Contact contact = new Contact("Dat", "Nguyen", "0378911238", "dat@gmail", "Noi dung", "Chi tiet noi dung");
+//                 contactRepository.save(contact);
             }
         };
     }
