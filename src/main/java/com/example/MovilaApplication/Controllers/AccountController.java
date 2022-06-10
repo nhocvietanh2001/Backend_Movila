@@ -29,6 +29,16 @@ public class AccountController {
         return hotels;
     }
 
+    @GetMapping("/users")
+    List<Account> getAllUser() {
+        return accountService.getAllUserAccount();
+    }
+
+    @GetMapping("/hotels")
+    List<Account> getAllHotel() {
+        return accountService.getAllHotelAccount();
+    }
+
     @GetMapping("/login")
     List<Optional<Account>> ValidatePa(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
         Account a = new Account(username, password, role);

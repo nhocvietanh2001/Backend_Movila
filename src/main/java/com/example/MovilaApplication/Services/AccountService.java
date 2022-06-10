@@ -97,4 +97,14 @@ public class AccountService {
             );
         }
     }
+
+    public List<Account> getAllUserAccount() {
+        List<Account> accounts = accountRepository.findAllAccountByRole("user");
+        return accounts;
+    }
+
+    public List<Account> getAllHotelAccount() {
+        List<Account> accounts = accountRepository.findAllAccountByRole("hotel");
+        return accounts;
+    }
 }
