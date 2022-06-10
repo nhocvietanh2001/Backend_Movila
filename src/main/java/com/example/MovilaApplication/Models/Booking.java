@@ -16,7 +16,7 @@ public class Booking {
     // Relational
 
     // Book-User
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(
             name = "uid",
             referencedColumnName = "uid" // id of the user

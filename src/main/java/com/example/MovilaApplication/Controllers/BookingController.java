@@ -1,6 +1,7 @@
 package com.example.MovilaApplication.Controllers;
 
 
+import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.Booking;
 import com.example.MovilaApplication.Models.Room;
 import com.example.MovilaApplication.Services.BookingService;
@@ -47,8 +48,13 @@ public class BookingController {
         return bookingService.InsertBooking(booking, rid, uid);
     }
 
-    @DeleteMapping("/{bid}")
-    Integer DeleteBooking(@PathVariable Integer bid/*, @RequestBody*/ ){
-        return bookingService.DeleteBooking(bid);
+    @DeleteMapping("/validate/{bookingid}")
+    List<Bill> DeleteBookingAndInsertBill(@PathVariable Long bookingid){
+        return bookingService.DeleteBookingAndInsertBill(bookingid);
+    }
+
+    @DeleteMapping("/cancel/{bookingid}")
+    Boolean CancelBooking(@PathVariable Long bookingid){
+        return bookingService.CancelBooking(bookingid);
     }
 }

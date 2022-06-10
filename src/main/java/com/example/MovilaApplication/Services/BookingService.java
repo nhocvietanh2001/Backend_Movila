@@ -1,12 +1,10 @@
 package com.example.MovilaApplication.Services;
 
+import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.Booking;
 import com.example.MovilaApplication.Models.Room;
 import com.example.MovilaApplication.Models.User;
-import com.example.MovilaApplication.Repositories.BookingRepository;
-import com.example.MovilaApplication.Repositories.HotelRepository;
-import com.example.MovilaApplication.Repositories.RoomRepository;
-import com.example.MovilaApplication.Repositories.UserRepository;
+import com.example.MovilaApplication.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,8 @@ public class BookingService {
     public UserRepository userRepository;
     @Autowired
     HotelRepository hotelRepository;
+    @Autowired
+    BillRepository billRepository;
 
     public Set<Booking> InsertBooking(Booking booking, Long rid, Long uid) {
         try
@@ -53,12 +53,22 @@ public class BookingService {
     }
     @Transactional
     @Modifying
-    public Integer DeleteBooking(Integer bid) {
-        try{
-            return bookingRepository.deleteBooking(bid);
+    public List<Bill> DeleteBookingAndInsertBill(Long bookingid) {
+        try {
+            Optional<Booking> booking = bookingRepository.findById(bookingid);
+
+            LocalDate checkoutDate = LocalDate.now();
+            Bill bill = new Bill(booking.get().getCheckinDate(), checkoutDate, booking.get().getUser_booking(), booking.get().getBooked_room());
+
+            billRepository.save(bill);
+            bookingRepository.deleteById(bookingid);
+
+            List<Bill> bills = new ArrayList<>();
+            bills.add(bill);
+            return bills;
         }
-        catch (Exception e){
-            return 0;
+        catch(Exception e) {
+            return null;
         }
     }
 
@@ -107,6 +117,18 @@ public class BookingService {
         }
         rooms.removeAll(unavailableRooms);
         return rooms;
+    }
+
+    public Boolean CancelBooking(Long bookingid) {
+        try {
+            Optional<Booking> booking = bookingRepository.findById(bookingid);
+            bookingRepository.deleteById(bookingid);
+
+            return true;
+        }
+        catch(Exception e) {
+            return false;
+        }
     }
 }
 

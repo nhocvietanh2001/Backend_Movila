@@ -34,7 +34,7 @@ public class BillController {
         return billService.InsertBill(bill, uid);
     }
 
-    @DeleteMapping("/DeleteBill/{bid}")
+    @DeleteMapping("/{bid}")
     Boolean DeleteBill(@PathVariable Long bid){
         return billService.DeleteBill(bid);
     }

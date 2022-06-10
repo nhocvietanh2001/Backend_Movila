@@ -3,6 +3,7 @@ package com.example.MovilaApplication.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,9 +13,8 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "billid")
     private Long id;
-    private Date checkinDate;
-    private Date checkoutDate;
-    private Integer price;
+    private LocalDate checkinDate;
+    private LocalDate checkoutDate;
 
 //    // Relational
 //    // Bill - Booking
@@ -43,18 +43,11 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(Date checkinDate, Date checkoutDate, Integer price) {
+    public Bill(LocalDate checkinDate, LocalDate checkoutDate, User user_billing, Room room_billing) {
         this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
-        this.price = price;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
+        this.user_billing = user_billing;
+        this.room_billing = room_billing;
     }
 
     public Long getId() {
@@ -65,19 +58,19 @@ public class Bill {
         this.id = id;
     }
 
-    public Date getCheckinDate() {
+    public LocalDate getCheckinDate() {
         return checkinDate;
     }
 
-    public void setCheckinDate(Date checkinDate) {
+    public void setCheckinDate(LocalDate checkinDate) {
         this.checkinDate = checkinDate;
     }
 
-    public Date getCheckoutDate() {
+    public LocalDate getCheckoutDate() {
         return checkoutDate;
     }
 
-    public void setCheckoutDate(Date checkoutDate) {
+    public void setCheckoutDate(LocalDate checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
 
@@ -89,23 +82,14 @@ public class Bill {
         this.user_billing = user;
     }
 
-    //
-//    public Room getRoom() {
-//        return room;
-//    }
-//
-//    public void setRoom(Room room) {
-//        this.room = room;
-//    }
-
     @Override
     public String toString() {
         return "Bill{" +
                 "id=" + id +
                 ", checkinDate=" + checkinDate +
                 ", checkoutDate=" + checkoutDate +
-                ", price=" + price +
                 ", user_billing=" + user_billing +
+                ", room_billing=" + room_billing +
                 '}';
     }
 }
