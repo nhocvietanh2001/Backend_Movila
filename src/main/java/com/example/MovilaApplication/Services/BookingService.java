@@ -61,7 +61,7 @@ public class BookingService {
             LocalDate checkinDate = booking.get().getCheckinDate();
             LocalDate checkoutDate = LocalDate.now();
             Integer day = Math.toIntExact(ChronoUnit.DAYS.between(checkinDate, checkoutDate)) + 1;
-            Integer price = booking.get().getBooked_room().getPrice() * day / 10;
+            Float price = Float.valueOf(booking.get().getBooked_room().getPrice() * day / 10);
             Bill bill = new Bill(booking.get().getCheckinDate(), checkoutDate, price, booking.get().getUser_booking(), booking.get().getBooked_room());
 
             billRepository.save(bill);

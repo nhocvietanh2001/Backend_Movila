@@ -67,4 +67,9 @@ public class BillService {
         }
     }
 
+    public List<Bill> GetBillByUid(Long uid) {
+        User user = userRepository.findById(uid).get();
+        List<Bill> billList = billRepository.findBillByUid(uid);
+        return billList;
+    }
 }
