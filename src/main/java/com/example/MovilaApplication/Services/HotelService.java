@@ -71,7 +71,7 @@ public class HotelService {
     public List<Account> findAccountOfHotelById(Long id) {
         Hotel foundHotel = hotelRepository.findById(id).get();
         List<Account> accounts = new ArrayList<>();
-        accounts.add(foundHotel.getAccount());
+        accounts.add(foundHotel.getAccount().cloneAndRemovePassword());
         return accounts;
     }
 }

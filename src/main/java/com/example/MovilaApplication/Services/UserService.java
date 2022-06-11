@@ -38,7 +38,7 @@ public class UserService {
     public List<Account> findAccountOfUserById(Long id){
         User foundUser = userRepository.findById(id).get();
         List<Account> accounts = new ArrayList<>();
-        accounts.add(foundUser.getAccount());
+        accounts.add(foundUser.getAccount().cloneAndRemovePassword());
         return accounts;
     }
 

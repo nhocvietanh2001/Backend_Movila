@@ -25,8 +25,7 @@ public class AccountController {
 
     @GetMapping
     List<Account> getAll() {
-        List<Account> hotels = accountRepository.findAll();
-        return hotels;
+        return accountService.getAll();
     }
 
     @GetMapping("/users")
@@ -40,13 +39,13 @@ public class AccountController {
     }
 
     @GetMapping("/login")
-    List<Optional<Account>> ValidatePa(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
+    List<Account> ValidatePa(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
         Account a = new Account(username, password, role);
         return accountService.Validate(a.getUsername(), a.getPassword());
     }
 
     @GetMapping("/loginjson")
-    List<Optional<Account>> ValidateJ(@RequestBody String username, @RequestBody String password, @RequestBody String role) {
+    List<Account> ValidateJ(@RequestBody String username, @RequestBody String password, @RequestBody String role) {
         Account a = new Account(username, password, role);
         return accountService.Validate(a.getUsername(), a.getPassword());
     }
@@ -70,7 +69,7 @@ public class AccountController {
         return accountService.Update(account, id);
     }
 
-    @PutMapping("/{aid}/users/{uid}")
+/*    @PutMapping("/{aid}/users/{uid}")
     public Account assignToUser(@PathVariable Long aid, @PathVariable Long uid) {
         Account account = accountRepository.findById(aid).get();
         User user = userRepository.findById(uid).get();
@@ -78,10 +77,10 @@ public class AccountController {
         user.setAccount(account);
         userRepository.save(user);
         return accountRepository.save(account);
-    }
+    }*/
 
     @DeleteMapping("/delete")
-    ResponseEntity<ResponseObject> Delete(@RequestBody Account account) {
+    Boolean Delete(@RequestBody Account account) {
         return accountService.Delete(account);
     }
 

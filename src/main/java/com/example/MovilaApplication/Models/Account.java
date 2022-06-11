@@ -32,6 +32,19 @@ public class Account {
         this.role = role;
     }
 
+    public Account(Account target) {
+        this.id = target.id;
+        this.username = target.username;
+        this.role = target.role;
+        this.password = "hidden";
+        this.user = target.user;
+        this.hotelaccount = target.hotelaccount;
+    }
+
+    public Account cloneAndRemovePassword() {
+        return new Account(this);
+    }
+
     public Long getId() {
         return id;
     }

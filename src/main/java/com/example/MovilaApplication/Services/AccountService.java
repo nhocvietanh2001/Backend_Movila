@@ -26,18 +26,21 @@ public class AccountService {
     @Autowired
     HotelService hotelService;
 
-    public List<Optional<Account>> Validate(String username, String password) {
+    public List<Account> Validate(String username, String password) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsernameAndPassword(username, password);
-        List<Optional<Account>> accounts = new ArrayList<>();
-        accounts.add(foundAccount);
-        return accounts;
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(foundAccount.get());
+
+        return convertToNoPasswordAccounts(accounts);
     }
 
     public List<Account> Register(Account newAccount, User newUser) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsername(newAccount.getUsername());
 
         if (foundAccount.isPresent()) {
-            return null;
+            List<Account> accounts = new ArrayList<>();
+            accounts.add(foundAccount.get());
+            return convertToNoPasswordAccounts(accounts);
         }
         else {
             newAccount.setUser(newUser);
@@ -46,7 +49,7 @@ public class AccountService {
             accountRepository.save(newAccount);
             List<Account> accounts = new ArrayList<>();
             accounts.add(newAccount);
-            return accounts;
+            return convertToNoPasswordAccounts(accounts);
         }
     }
 
@@ -63,11 +66,11 @@ public class AccountService {
             accountRepository.save(newAccount);
             List<Account> accounts = new ArrayList<>();
             accounts.add(newAccount);
-            return accounts;
+            return convertToNoPasswordAccounts(accounts);
         }
     }
 
-    //Note: Update by username. Only update password, userID and role. Unable to update username.
+    //Note: Update by username. Only update password. Unable to update username.
     public Optional<Account> Update(Account account, Long id) {
 
         Boolean exists = accountRepository.existsById(id);
@@ -84,27 +87,38 @@ public class AccountService {
     }
 
     //Note: Delete by username, and have to validate the account before deleting.
-    public ResponseEntity<ResponseObject> Delete(Account account){
+    public Boolean Delete(Account account){
         Optional<Account> foundAccount = accountRepository.findAccountByUsernameAndPassword(account.getUsername(), account.getPassword());
         if (foundAccount.isPresent()) {
             accountRepository.deleteById(foundAccount.get().getId());
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("200", "Delete account successfully", "")
-            );
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("404", "Account not found", "")
-            );
+            return true;
+        } else {
+            return false;
         }
     }
 
     public List<Account> getAllUserAccount() {
         List<Account> accounts = accountRepository.findAllAccountByRole("user");
-        return accounts;
+        return convertToNoPasswordAccounts(accounts);
     }
 
     public List<Account> getAllHotelAccount() {
         List<Account> accounts = accountRepository.findAllAccountByRole("hotel");
-        return accounts;
+        return convertToNoPasswordAccounts(accounts);
+    }
+
+    public List<Account> getAll() {
+        List<Account> accounts = accountRepository.findAll();
+        return convertToNoPasswordAccounts(accounts);
+    }
+
+    private List<Account> convertToNoPasswordAccounts(List<Account> accounts) {
+        if (accounts.isEmpty())
+            return accounts;
+        List<Account> accountsNoPassword = new ArrayList<>();
+        for (Account account : accounts) {
+            accountsNoPassword.add(account.cloneAndRemovePassword());
+        }
+        return accountsNoPassword;
     }
 }
