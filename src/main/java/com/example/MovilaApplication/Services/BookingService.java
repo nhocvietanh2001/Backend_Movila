@@ -1,17 +1,12 @@
 package com.example.MovilaApplication.Services;
 
-import com.example.MovilaApplication.Models.Bill;
-import com.example.MovilaApplication.Models.Booking;
-import com.example.MovilaApplication.Models.Room;
-import com.example.MovilaApplication.Models.User;
+import com.example.MovilaApplication.Models.*;
+import com.example.MovilaApplication.Pattern.FacadeBookingBill;
 import com.example.MovilaApplication.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -52,29 +47,25 @@ public class BookingService {
             return new HashSet<>();
         }
     }
-    @Transactional
-    @Modifying
+
     public List<Bill> DeleteBookingAndInsertBill(Long bookingid) {
-        try {
-            Optional<Booking> booking = bookingRepository.findById(bookingid);
+        /*Optional<Booking> booking = bookingRepository.findById(bookingid);
 
-            LocalDate checkinDate = booking.get().getCheckinDate();
-            LocalDate checkoutDate = LocalDate.now();
-            Integer day = Math.toIntExact(ChronoUnit.DAYS.between(checkinDate, checkoutDate)) + 1;
-            Float price = Float.valueOf(booking.get().getBooked_room().getPrice() * day / 10);
+        LocalDate checkinDate = booking.get().getCheckinDate();
 
-            Bill bill = new Bill(booking.get().getCheckinDate(), checkoutDate, price, booking.get().getUser_booking(), booking.get().getBooked_room());
+        Integer day = Math.toIntExact(ChronoUnit.DAYS.between(checkinDate, checkoutDate)) + 1;
+        Float price = Float.valueOf(booking.get().getBooked_room().getPrice() * day / 10);
 
-            billRepository.save(bill);
-            bookingRepository.deleteById(bookingid);
+        Bill bill = new Bill(booking.get().getCheckinDate(), checkoutDate, price, booking.get().getUser_booking(), booking.get().getBooked_room());
 
-            List<Bill> bills = new ArrayList<>();
-            bills.add(bill);
-            return bills;
-        }
-        catch(Exception e) {
-            return null;
-        }
+        billRepository.save(bill);
+        bookingRepository.deleteById(bookingid);
+
+        List<Bill> bills = new ArrayList<>();
+        bills.add(bill);*/
+        FacadeBookingBill facadeBookingBill = new FacadeBookingBill(bookingRepository, billRepository);
+        return facadeBookingBill.DeleteBookingAndInsertBill(bookingid);
+
     }
 
     public List<Room> getRoomAvailable(Long hid) {
