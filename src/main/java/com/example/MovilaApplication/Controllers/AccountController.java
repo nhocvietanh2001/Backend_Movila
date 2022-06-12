@@ -45,9 +45,8 @@ public class AccountController {
     }
 
     @GetMapping("/loginjson")
-    List<Account> ValidateJ(@RequestBody String username, @RequestBody String password, @RequestBody String role) {
-        Account a = new Account(username, password, role);
-        return accountService.Validate(a.getUsername(), a.getPassword());
+    List<Account> ValidateJ(@RequestBody Account account) {
+        return accountService.Validate(account.getUsername(), account.getPassword());
     }
 
     @PostMapping("/register/user")

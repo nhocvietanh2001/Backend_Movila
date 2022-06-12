@@ -44,7 +44,7 @@ public class BookingController {
     }
 
     @PostMapping("rooms/{rid}/users/{uid}")
-    Set<Booking> InsertBooking(@RequestBody Booking booking, @PathVariable Long rid, @PathVariable Long uid){
+    List<Booking> InsertBooking(@RequestBody Booking booking, @PathVariable Long rid, @PathVariable Long uid){
         return bookingService.InsertBooking(booking, rid, uid);
     }
 

@@ -4,6 +4,7 @@ import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
 import com.example.MovilaApplication.Models.User;
+import com.example.MovilaApplication.Pattern.AdapterToList;
 import com.example.MovilaApplication.Repositories.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,17 +62,18 @@ public class HotelService {
         }
     }
 
-    public List<Optional<Hotel>> getHotelByID(Long hid) {
-        Optional<Hotel> optionalHotel = hotelRepository.findById(hid);
-        List<Optional<Hotel>> listHotels = new ArrayList<>();
-        listHotels.add(optionalHotel);
-        return listHotels;
+    public List<Hotel> getHotelByID(Long hid) {
+        Optional<Hotel> hotel = hotelRepository.findById(hid);
+        AdapterToList<Hotel> adapter = new AdapterToList(hotel.get());
+
+        return adapter.getListT();
     }
 
     public List<Account> findAccountOfHotelById(Long id) {
         Hotel foundHotel = hotelRepository.findById(id).get();
-        List<Account> accounts = new ArrayList<>();
-        accounts.add(foundHotel.getAccount().cloneAndRemovePassword());
-        return accounts;
+
+        AdapterToList<Account> adapter = new AdapterToList(foundHotel.getAccount().cloneAndRemovePassword());
+
+        return adapter.getListT();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.MovilaApplication.Services;
 
 import com.example.MovilaApplication.Models.*;
+import com.example.MovilaApplication.Pattern.AdapterToList;
 import com.example.MovilaApplication.Pattern.FacadeBookingBill;
 import com.example.MovilaApplication.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ public class BookingService {
     @Autowired
     BillRepository billRepository;
 
-    public Set<Booking> InsertBooking(Booking booking, Long rid, Long uid) {
+    public List<Booking> InsertBooking(Booking booking, Long rid, Long uid) {
         try
         {
-            Set<Booking> bookingSet = new HashSet<>();
             Optional<Booking> foundBooking = bookingRepository.findBookingByRidAndUid(rid, uid);
             if (foundBooking.isPresent()) {
-                bookingSet.add(foundBooking.get());
-                return bookingSet;
+                AdapterToList<Booking> adapter = new AdapterToList(foundBooking.get());
+
+                return adapter.getListT();
             }
 
             User user = userRepository.findById(uid).get();
@@ -40,11 +41,12 @@ public class BookingService {
             booking.setUser_booking(user);
             booking.setBooked_room(room);
             bookingRepository.save(booking);
-            bookingSet.add(booking);
-            return bookingSet;
+            AdapterToList<Booking> adapter = new AdapterToList(booking);
+
+            return adapter.getListT();
         }
         catch (Exception e){
-            return new HashSet<>();
+            return null;
         }
     }
 

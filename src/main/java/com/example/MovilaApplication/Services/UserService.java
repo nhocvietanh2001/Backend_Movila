@@ -5,6 +5,7 @@ import com.example.MovilaApplication.Models.Bill;
 import com.example.MovilaApplication.Models.Booking;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
+import com.example.MovilaApplication.Pattern.AdapterToList;
 import com.example.MovilaApplication.Repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +38,9 @@ public class UserService {
 
     public List<Account> findAccountOfUserById(Long id){
         User foundUser = userRepository.findById(id).get();
-        List<Account> accounts = new ArrayList<>();
-        accounts.add(foundUser.getAccount().cloneAndRemovePassword());
-        return accounts;
+        AdapterToList<Account> adapter = new AdapterToList(foundUser.getAccount().cloneAndRemovePassword());
+
+        return adapter.getListT();
     }
 
     public User addNewUser(User newUser){

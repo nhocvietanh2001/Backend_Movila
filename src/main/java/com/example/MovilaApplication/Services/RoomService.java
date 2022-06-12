@@ -2,6 +2,7 @@ package com.example.MovilaApplication.Services;
 
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.Room;
+import com.example.MovilaApplication.Pattern.AdapterToList;
 import com.example.MovilaApplication.Repositories.HotelRepository;
 import com.example.MovilaApplication.Repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class RoomService {
     @Autowired
     HotelRepository hotelRepository;
     // Get
-    public List<Optional<Room>> findRoomByID(long id){
+    public List<Room> findRoomByID(long id){
         Optional<Room> optionalRoom = roomRepository.findById(id);
-        List<Optional<Room>> listRooms = new ArrayList<>();
-        listRooms.add(optionalRoom);
-        return listRooms;
+        AdapterToList<Room> adapter = new AdapterToList(optionalRoom.get());
+
+        return adapter.getListT();
     }
 
     // Post

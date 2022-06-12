@@ -26,7 +26,7 @@ public class HotelController {
     }
 
     @GetMapping("/{hid}")
-    List<Optional<Hotel>> getHotelByID(@PathVariable Long hid) {
+    List<Hotel> getHotelByID(@PathVariable Long hid) {
         return hotelService.getHotelByID(hid);
     }
 

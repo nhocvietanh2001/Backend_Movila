@@ -4,6 +4,7 @@ import com.example.MovilaApplication.Models.Account;
 import com.example.MovilaApplication.Models.Hotel;
 import com.example.MovilaApplication.Models.ResponseObject;
 import com.example.MovilaApplication.Models.User;
+import com.example.MovilaApplication.Pattern.AdapterToList;
 import com.example.MovilaApplication.Repositories.AccountRepository;
 import com.example.MovilaApplication.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,28 +29,28 @@ public class AccountService {
 
     public List<Account> Validate(String username, String password) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsernameAndPassword(username, password);
-        List<Account> accounts = new ArrayList<>();
-        accounts.add(foundAccount.get());
 
-        return convertToNoPasswordAccounts(accounts);
+        AdapterToList<Account> adapter = new AdapterToList(foundAccount.get());
+
+        return convertToNoPasswordAccounts(adapter.getListT());
     }
 
     public List<Account> Register(Account newAccount, User newUser) {
         Optional<Account> foundAccount = accountRepository.findAccountByUsername(newAccount.getUsername());
 
         if (foundAccount.isPresent()) {
-            List<Account> accounts = new ArrayList<>();
-            accounts.add(foundAccount.get());
-            return convertToNoPasswordAccounts(accounts);
+            AdapterToList<Account> adapter = new AdapterToList(foundAccount.get());
+
+            return convertToNoPasswordAccounts(adapter.getListT());
         }
         else {
             newAccount.setUser(newUser);
             newUser.setAccount(newAccount);
             userService.addNewUser(newUser);
             accountRepository.save(newAccount);
-            List<Account> accounts = new ArrayList<>();
-            accounts.add(newAccount);
-            return convertToNoPasswordAccounts(accounts);
+            AdapterToList<Account> adapter = new AdapterToList(foundAccount.get());
+
+            return convertToNoPasswordAccounts(adapter.getListT());
         }
     }
 
@@ -64,9 +65,9 @@ public class AccountService {
             newHotel.setAccount(newAccount);
             hotelService.addHotel(newHotel);
             accountRepository.save(newAccount);
-            List<Account> accounts = new ArrayList<>();
-            accounts.add(newAccount);
-            return convertToNoPasswordAccounts(accounts);
+            AdapterToList<Account> adapter = new AdapterToList(foundAccount.get());
+
+            return convertToNoPasswordAccounts(adapter.getListT());
         }
     }
 

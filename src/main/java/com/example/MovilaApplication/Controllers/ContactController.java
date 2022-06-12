@@ -27,8 +27,6 @@ public class ContactController {
         return contactService.getAllContact();
     }
 
-
-
     @PostMapping
     Contact InsertContact(@RequestBody Contact contact){
         return contactService.InsertContact(contact);

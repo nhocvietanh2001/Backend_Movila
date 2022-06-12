@@ -29,7 +29,7 @@ public class BillController {
     }
 
     @GetMapping(path = "/{bid}")
-    Set<Bill> GetBillByBillID(@PathVariable Long bid){
+    List<Bill> GetBillByBillID(@PathVariable Long bid){
         return billService.GetBillByBillID(bid);
     }
 
@@ -39,7 +39,7 @@ public class BillController {
     }
 
     @PostMapping("/users/{uid}")
-    Set<Bill> InsertBill(@RequestBody Bill bill, @PathVariable Long uid){
+    List<Bill> InsertBill(@RequestBody Bill bill, @PathVariable Long uid){
         return billService.InsertBill(bill, uid);
     }
 

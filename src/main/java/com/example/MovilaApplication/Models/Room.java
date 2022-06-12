@@ -52,6 +52,24 @@ public class Room {
         this.imageURL = imageURL;
     }
 
+    public Room(Room target) {
+        this.id = target.id;
+        this.name = target.name;
+        this.cat = target.cat;
+        this.price = target.price;
+        this.numberOfGuest = target.numberOfGuest;
+        this.floor = target.floor;
+        this.area = target.area;
+        this.wifi = target.wifi;
+        this.view = target.view;
+        this.description = target.description;
+        this.imageURL = target.description;
+    }
+
+    public Room clone() {
+        return new Room(this);
+    }
+
     public Room(String view) {
         this.view=view;
     }
