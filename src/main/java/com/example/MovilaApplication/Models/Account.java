@@ -1,12 +1,13 @@
 package com.example.MovilaApplication.Models;
 
+import com.example.MovilaApplication.Pattern.IPrototype;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="account")
-public class Account {
+public class Account implements IPrototype {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="aid")
@@ -41,6 +42,7 @@ public class Account {
         this.hotelaccount = target.hotelaccount;
     }
 
+    @Override
     public Account cloneAndRemovePassword() {
         return new Account(this);
     }
