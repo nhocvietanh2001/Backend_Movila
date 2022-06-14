@@ -30,9 +30,8 @@ public class FacadeBookingBill {
         billRepository.save(bill);
         bookingRepository.deleteById(bookingid);
 
-        List<Bill> bills = new ArrayList<>();
-        bills.add(bill);
+        AdapterToList<Bill> adapter = new AdapterToList<>(bill);
 
-        return bills;
+        return adapter.getListT();
     }
 }

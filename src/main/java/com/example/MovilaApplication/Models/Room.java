@@ -1,6 +1,8 @@
 package com.example.MovilaApplication.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -35,6 +37,10 @@ public class Room {
     @ManyToOne()
     @JoinColumn(name = "hid", referencedColumnName = "hid")
     private Hotel hotel;
+
+    /*@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private Booking booking;*/
 
     public Room() {
     }
