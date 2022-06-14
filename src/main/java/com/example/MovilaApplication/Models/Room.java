@@ -4,6 +4,7 @@ package com.example.MovilaApplication.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="room")
@@ -38,9 +39,9 @@ public class Room {
     @JoinColumn(name = "hid", referencedColumnName = "hid")
     private Hotel hotel;
 
-    /*@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room_billing")
     @JsonIgnore
-    private Booking booking;*/
+    private List<Bill> bills;
 
     public Room() {
     }

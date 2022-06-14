@@ -31,7 +31,7 @@ public class Bill {
     private User user_billing;
 
     // Bill - Room
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "rid",
             referencedColumnName = "rid"
